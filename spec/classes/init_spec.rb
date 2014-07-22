@@ -1,4 +1,5 @@
 require 'spec_helper'
+
 describe 'krb5' do
 
   context 'with defaults for all parameters on RedHat' do
@@ -237,34 +238,6 @@ describe 'krb5' do
     it { should contain_file('krb5conf').with_content("#Managed by puppet, any changes will be overwritten\n\n\[libdefaults\]\ndefault_realm = EXAMPLE.COM\n") }
   end
 
-  context 'with default_realm parameter set to <EXAMPLE.COM> and disabled logging defaults' do
-    let(:facts) do
-      {
-        :osfamily => 'RedHat',
-      }
-    end
-    let(:params) do
-      {
-        :logging_default      => '',
-        :logging_kdc          => '',
-        :logging_admin_server => '',
-        :default_realm        => 'EXAMPLE.COM',
-      }
-    end
-
-    it { should contain_class('krb5') }
-    it { should contain_package('krb5-libs') }
-    it { should contain_file('krb5conf').with({
-      'path'   => '/etc/krb5.conf',
-      'ensure' => 'present',
-      'owner'  => 'root',
-      'group'  => 'root',
-      'mode'   => '0644',
-    }) }
-
-    it { should contain_file('krb5conf').with_content("#Managed by puppet, any changes will be overwritten\n\n\[libdefaults\]\ndefault_realm = EXAMPLE.COM\n") }
-  end
-
   context 'with dns_lookup_realm parameter set to <true> and disabled logging defaults' do
     let(:facts) do
       {
@@ -405,7 +378,7 @@ describe 'krb5' do
     it { should contain_file('krb5conf').with_content("#Managed by puppet, any changes will be overwritten\n\n\[libdefaults\]\nforwardable = false\n") }
   end
 
-  context 'with proxiable parameter set to valid <false> and disabled logging defaults' do
+  context 'with proxiable parameter set to <false> and disabled logging defaults' do
     let(:facts) do
       {
         :osfamily => 'RedHat',

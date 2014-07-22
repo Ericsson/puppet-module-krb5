@@ -12,6 +12,7 @@ Module to manage the kerberos config file
 This module is built for use with Puppet v3 on the following OS families.
 
 * RHEL 6
+* Suse
 
 ===
 
@@ -128,9 +129,9 @@ krb5::domain_realm:
 
 package
 -------
-Kerberos package to install
+String with the related kerberos package to install. 'USE_DEFAULTS' will choose the appropriate default for the system.
 
-- *Default*: krb5-libs
+- *Default*: 'USE_DEFAULTS'
 
 krb5conf_file
 -------------
