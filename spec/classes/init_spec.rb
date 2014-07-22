@@ -108,4 +108,109 @@ example.com = EXAMPLE.COM
 '}) }
     it { should contain_package('krb5-package') }
   end
+
+  context 'with all logging parameters set to <> (overriding default values)' do
+    let(:facts) do
+      {
+        :osfamily => 'RedHat',
+      }
+    end
+    let(:params) do
+      {
+        :logging_default      => '',
+        :logging_kdc          => '',
+        :logging_admin_server => '',
+      }
+    end
+    it { should contain_class('krb5') }
+    it { should contain_package('krb5-libs') }
+    it { should contain_file('krb5conf').with({
+      'path'   => '/etc/krb5.conf',
+      'ensure' => 'present',
+      'owner'  => 'root',
+      'group'  => 'root',
+      'mode'   => '0644',
+    }) }
+
+    it { should contain_file('krb5conf').with_content("#Managed by puppet, any changes will be overwritten\n") }
+  end
+
+  context 'with logging_default parameter set to <FILE:/var/log/kerberos_default.log>' do
+    let(:facts) do
+      {
+        :osfamily => 'RedHat',
+      }
+    end
+    let(:params) do
+      {
+        :logging_default      => 'FILE:/var/log/kerberos_default.log',
+        :logging_kdc          => '',
+        :logging_admin_server => '',
+      }
+    end
+    it { should contain_class('krb5') }
+    it { should contain_package('krb5-libs') }
+    it { should contain_file('krb5conf').with({
+      'path'   => '/etc/krb5.conf',
+      'ensure' => 'present',
+      'owner'  => 'root',
+      'group'  => 'root',
+      'mode'   => '0644',
+    }) }
+
+    it { should contain_file('krb5conf').with_content("#Managed by puppet, any changes will be overwritten\n\n\[logging\]\ndefault = FILE:\/var\/log\/kerberos_default.log\n") }
+  end
+
+  context 'with logging_kdc parameter set to <FILE:/var/log/kerberos_kdc.log>' do
+    let(:facts) do
+      {
+        :osfamily => 'RedHat',
+      }
+    end
+    let(:params) do
+      {
+        :logging_default      => '',
+        :logging_kdc          => 'FILE:/var/log/kerberos_kdc.log',
+        :logging_admin_server => '',
+      }
+    end
+    it { should contain_class('krb5') }
+    it { should contain_package('krb5-libs') }
+    it { should contain_file('krb5conf').with({
+      'path'   => '/etc/krb5.conf',
+      'ensure' => 'present',
+      'owner'  => 'root',
+      'group'  => 'root',
+      'mode'   => '0644',
+    }) }
+
+    it { should contain_file('krb5conf').with_content("#Managed by puppet, any changes will be overwritten\n\n\[logging\]\nkdc = FILE:\/var\/log\/kerberos_kdc.log\n") }
+  end
+
+  context 'with logging_admin_server parameter set to <FILE:/var/log/kerberos_admin.log>' do
+    let(:facts) do
+      {
+        :osfamily => 'RedHat',
+      }
+    end
+    let(:params) do
+      {
+        :logging_default      => '',
+        :logging_kdc          => '',
+        :logging_admin_server => 'FILE:/var/log/kerberos_admin.log',
+      }
+    end
+    it { should contain_class('krb5') }
+    it { should contain_package('krb5-libs') }
+    it { should contain_file('krb5conf').with({
+      'path'   => '/etc/krb5.conf',
+      'ensure' => 'present',
+      'owner'  => 'root',
+      'group'  => 'root',
+      'mode'   => '0644',
+    }) }
+
+    it { should contain_file('krb5conf').with_content("#Managed by puppet, any changes will be overwritten\n\n\[logging\]\nadmin_server = FILE:\/var\/log\/kerberos_admin.log\n") }
+  end
+
 end
