@@ -1,0 +1,10 @@
+#Managed by puppet, any changes will be overwritten
+
+[appdefaults]
+pam = {
+         debug = false
+         forwardable = true
+         krb4_convert = false
+         renew_lifetime = 36000
+         ticket_lifetime = 36000
+}

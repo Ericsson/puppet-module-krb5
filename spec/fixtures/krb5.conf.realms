@@ -1,0 +1,10 @@
+#Managed by puppet, any changes will be overwritten
+
+[realms]
+EXAMPLE.COM = {
+  kdc = kdc1.example.com:88
+  kdc = kdc2.example.com:88
+  admin_server = kdc1.example.com:749
+  admin_server = kdc2.example.com:749
+  default_domain = example.com
+}

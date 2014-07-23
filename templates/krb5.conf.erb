@@ -1,19 +1,41 @@
 #Managed by puppet, any changes will be overwritten
+<% if @logging_default != '' or @logging_kdc != '' or @logging_admin_server != '' -%>
 
 [logging]
+<% if @logging_default != '' -%>
 default = <%= @logging_default %>
+<% end -%>
+<% if @logging_kdc != '' -%>
 kdc = <%= @logging_kdc %>
+<% end -%>
+<% if @logging_admin_server != '' -%>
 admin_server = <%= @logging_admin_server %>
+<% end -%>
+<% end -%>
 <% if @default_realm or @dns_lookup_realm or @dns_lookup_kdc or @ticket_lifetime or @default_keytab_name or @forwardable or @proxiable -%>
 
 [libdefaults]
-<% if @default_realm -%>default_realm = <%= @default_realm %><% end %>
-<% if @dns_lookup_realm -%>dns_lookup_realm = <%= @dns_lookup_realm %><% end %>
-<% if @dns_lookup_kdc -%>dns_lookup_kdc = <%= @dns_lookup_kdc %><% end %>
-<% if @ticket_lifetime -%>ticket_lifetime = <%= @ticket_lifetime %><% end %>
-<% if @default_keytab_name -%>default_keytab_name = <%= @default_keytab_name %><% end %>
-<% if @forwardable -%>forwardable = <%= @forwardable %><% end %>
-<% if @proxiable -%>proxiable = <%= @proxiable %><% end %>
+<% if @default_realm -%>
+default_realm = <%= @default_realm %>
+<% end -%>
+<% if @dns_lookup_realm -%>
+dns_lookup_realm = <%= @dns_lookup_realm %>
+<% end -%>
+<% if @dns_lookup_kdc -%>
+dns_lookup_kdc = <%= @dns_lookup_kdc %>
+<% end -%>
+<% if @ticket_lifetime -%>
+ticket_lifetime = <%= @ticket_lifetime %>
+<% end -%>
+<% if @default_keytab_name -%>
+default_keytab_name = <%= @default_keytab_name %>
+<% end -%>
+<% if @forwardable -%>
+forwardable = <%= @forwardable %>
+<% end -%>
+<% if @proxiable -%>
+proxiable = <%= @proxiable %>
+<% end -%>
 <% end -%>
 <% if @appdefaults -%>
 

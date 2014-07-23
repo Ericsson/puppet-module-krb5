@@ -1,0 +1,37 @@
+#Managed by puppet, any changes will be overwritten
+
+[logging]
+default = FILE:/var/log/krb5libs.log
+kdc = FILE:/var/log/krb5kdc.log
+admin_server = FILE:/var/log/kadmind.log
+
+[libdefaults]
+default_realm = EXAMPLE.COM
+dns_lookup_realm = false
+dns_lookup_kdc = false
+ticket_lifetime = 24h
+default_keytab_name = /etc/opt/quest/vas/host.keytab
+forwardable = true
+proxiable = true
+
+[appdefaults]
+pam = {
+         debug = false
+         forwardable = true
+         krb4_convert = false
+         renew_lifetime = 36000
+         ticket_lifetime = 36000
+}
+
+[realms]
+EXAMPLE.COM = {
+  kdc = kdc1.example.com:88
+  kdc = kdc2.example.com:88
+  admin_server = kdc1.example.com:749
+  admin_server = kdc2.example.com:749
+  default_domain = example.com
+}
+
+[domain_realm]
+.example.com = EXAMPLE.COM
+example.com = EXAMPLE.COM
