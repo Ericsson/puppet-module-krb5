@@ -69,6 +69,7 @@ describe 'krb5' do
         :default_keytab_name  => '/etc/opt/quest/vas/host.keytab',
         :forwardable          => 'true',
         :proxiable            => 'true',
+        :rdns                 => 'false',
         :realms               => {
           'EXAMPLE.COM'       => {
             'default_domain'  => 'example.com',

@@ -13,6 +13,7 @@ ticket_lifetime = 24h
 default_keytab_name = /etc/opt/quest/vas/host.keytab
 forwardable = true
 proxiable = true
+rdns = false
 
 [appdefaults]
 pam = {

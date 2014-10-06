@@ -12,6 +12,7 @@ class krb5 (
     $realms               = undef,
     $appdefaults          = undef,
     $domain_realm         = undef,
+    $rdns                 = undef,
     $package              = 'USE_DEFAULTS',
     $krb5conf_file        = '/etc/krb5.conf',
     $krb5conf_ensure      = 'present',

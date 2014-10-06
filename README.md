@@ -79,6 +79,12 @@ Boolean if ticket is proxiable
 
 - *Default*: undef
 
+rdns
+----
+Boolean if reverse DNS resolution should be used
+
+- *Default*: undef
+
 realms
 ------
 List of kerberos domains
