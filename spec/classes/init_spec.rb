@@ -89,17 +89,22 @@ describe 'krb5' do
           'example.com'       => 'EXAMPLE.COM',
         },
         :package              => 'krb5-package',
+        :krb5conf_file        => '/etc/kerberos/krb5.conf',
+        :krb5conf_ensure      => 'file',
+        :krb5conf_owner       => 'kerberos',
+        :krb5conf_group       => 'kerberos',
+        :krb5conf_mode        => '0600',
       }
     end
 
     it { should contain_class('krb5') }
     it { should contain_package('krb5-package') }
     it { should contain_file('krb5conf').with({
-      'path'   => '/etc/krb5.conf',
-      'ensure' => 'present',
-      'owner'  => 'root',
-      'group'  => 'root',
-      'mode'   => '0644',
+      'path'   => '/etc/kerberos/krb5.conf',
+      'ensure' => 'file',
+      'owner'  => 'kerberos',
+      'group'  => 'kerberos',
+      'mode'   => '0600',
     }) }
 
     krb5conf_fixture = File.read(fixtures("krb5.conf.allset"))

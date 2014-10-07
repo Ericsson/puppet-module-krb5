@@ -138,3 +138,27 @@ krb5conf_file
 Path to config file
 
 - *Default*: /etc/krb5.conf
+
+krb5conf_ensure
+---------------
+Ensure of the config file
+
+- *Default*: present
+
+krb5conf_owner
+--------------
+Owner of the config file
+
+- *Default*: root
+
+krb5conf_group
+--------------
+Group of the config file
+
+- *Default*: root
+
+krb5conf_mode
+-------------
+Mode of the config file
+
+- *Default*: 0644

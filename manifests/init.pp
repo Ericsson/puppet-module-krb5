@@ -14,6 +14,10 @@ class krb5 (
     $domain_realm         = undef,
     $package              = 'USE_DEFAULTS',
     $krb5conf_file        = '/etc/krb5.conf',
+    $krb5conf_ensure      = 'present',
+    $krb5conf_owner       = 'root',
+    $krb5conf_group       = 'root',
+    $krb5conf_mode        = '0644',
 ) {
   if $package == 'USE_DEFAULTS' {
     case $::osfamily {
@@ -36,10 +40,10 @@ class krb5 (
 
   file{ 'krb5conf':
     path    => $krb5conf_file,
-    ensure  => present,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+    ensure  => $krb5conf_ensure,
+    owner   => $krb5conf_owner,
+    group   => $krb5conf_group,
+    mode    => $krb5conf_mode,
     content => template('krb5/krb5.conf.erb'),
   }
 }
