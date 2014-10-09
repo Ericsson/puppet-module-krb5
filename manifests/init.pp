@@ -28,8 +28,11 @@ class krb5 (
       'Suse': {
         $package_real = 'krb5'
       }
+      'Debian': {
+        $package_real = 'krb5-user'
+      }
       default: {
-        fail("krb5 only supports default package names for RedHat and Suse. Detected osfamily is <${::osfamily}>. Please specify package name with the \$package variable.")
+        fail("krb5 only supports default package names for Debian, RedHat and Suse. Detected osfamily is <${::osfamily}>. Please specify package name with the \$package variable.")
       }
     }
   } else {
