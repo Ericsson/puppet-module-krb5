@@ -35,16 +35,16 @@ describe 'krb5' do
   end
 
   context 'on unsupported osfamily' do
-    let(:facts) do { :osfamily => 'Debian', } end
+    let(:facts) do { :osfamily => 'unsupported', } end
     it 'should fail' do
       expect {
         should contain_class('krb5')
-      }.to raise_error(Puppet::Error,/krb5 only supports default package names for RedHat and Suse./)
+      }.to raise_error(Puppet::Error,/krb5 only supports default package names for/)
     end
   end
 
   context 'on unsupported osfamily with package set' do
-    let(:facts) do { :osfamily => 'Debian', } end
+    let(:facts) do { :osfamily => 'unsupported', } end
     let(:params) do { :package => 'krb5-package', } end
     it { should contain_class('krb5') }
     it { should contain_package('krb5-package') }
