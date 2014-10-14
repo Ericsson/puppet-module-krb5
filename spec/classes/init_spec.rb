@@ -34,6 +34,51 @@ describe 'krb5' do
     it { should contain_file('krb5conf').with_content(krb5conf_fixture) }
   end
 
+  context 'with defaults for all parameters on Solaris' do
+    let(:facts) do { :osfamily => 'Solaris', } end
+    let(:params) do
+      { :package_adminfile => '/sw/Solaris/Sparc/noask',
+        :package_provider  => 'sun',
+        :package_source    => '/sw/Solaris/Sparc/krb/krb-x.xx-sol10-sparc',
+      }
+    end
+    it { should contain_class('krb5') }
+    it {
+      should contain_package('SUNWkrbr').with({
+        'adminfile' => '/sw/Solaris/Sparc/noask',
+        'provider'  => 'sun',
+        'source'    => '/sw/Solaris/Sparc/krb/krb-x.xx-sol10-sparc',
+      })
+    }
+    it {
+      should contain_package('SUNWkrbu').with({
+        'adminfile' => '/sw/Solaris/Sparc/noask',
+        'provider'  => 'sun',
+        'source'    => '/sw/Solaris/Sparc/krb/krb-x.xx-sol10-sparc',
+      })
+    }
+    it { should contain_file('krb5conf').with({
+      'path'   => '/etc/krb5.conf',
+      'ensure' => 'present',
+      'owner'  => 'root',
+      'group'  => 'root',
+      'mode'   => '0644',
+    }) }
+    it { should contain_file('krb5directory').with({
+      'path'   => '/etc/krb5',
+      'ensure' => 'directory',
+      'owner'  => 'root',
+      'group'  => 'root',
+    }) }
+    it { should contain_file('krb5link').with({
+      'path'   => '/etc/krb5/krb5.conf',
+      'ensure' => 'link',
+      'target' => '/etc/krb5.conf',
+    }) }
+    krb5conf_fixture = File.read(fixtures("krb5.conf.defaults"))
+    it { should contain_file('krb5conf').with_content(krb5conf_fixture) }
+  end
+
   context 'on unsupported osfamily' do
     let(:facts) do { :osfamily => 'unsupported', } end
     it 'should fail' do
