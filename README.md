@@ -14,6 +14,7 @@ This module is built for use with Puppet v3 on the following OS families.
 * Debian
 * RHEL 6
 * Suse
+* Solaris
 
 ===
 
@@ -139,6 +140,24 @@ package
 String with the related kerberos package to install. 'USE_DEFAULTS' will choose the appropriate default for the system.
 
 - *Default*: 'USE_DEFAULTS'
+
+package_adminfile
+-----------------
+Solaris specific: string for package adminfile.
+
+- *Default*: undef
+
+package_provider
+----------------
+Solaris specific (mostly): string for package provider.
+
+- *Default*: undef
+
+package_source
+--------------
+Solaris specific (mostly): string for package source.
+
+- *Default*: undef
 
 krb5conf_file
 -------------
