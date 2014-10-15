@@ -14,7 +14,7 @@ This module is built for use with Puppet v3 on the following OS families.
 * Debian
 * RHEL 6
 * Suse
-* Solaris
+* Solaris 10
 
 ===
 
