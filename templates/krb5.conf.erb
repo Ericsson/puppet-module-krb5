@@ -57,13 +57,21 @@ rdns = <%= @rdns %>
 <% @realms.keys.sort.each do |key| -%>
 <%= key %> = {
 <% if @realms[key]['kdc'] -%>
+<% if @realms[key]['kdc'].is_a?(Array) -%>
 <% @realms[key]['kdc'].sort.each do |kdc| -%>
   kdc = <%= kdc %>
 <% end -%>
+<% else -%>
+  kdc = <%= @realms[key]['kdc'] %>
+<% end -%>
 <% end -%>
 <% if @realms[key]['admin_server'] -%>
+<% if @realms[key]['admin_server'].is_a?(Array) -%>
 <% @realms[key]['admin_server'].sort.each do |as| -%>
   admin_server = <%= as %>
+<% end -%>
+<% else -%>
+  admin_server = <%= @realms[key]['admin_server'] %>
 <% end -%>
 <% end -%>
 <% if @realms[key]['default_domain'] -%>

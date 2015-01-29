@@ -25,6 +25,11 @@ pam = {
 }
 
 [realms]
+ANOTHER.EXAMPLE.COM = {
+  kdc = kdc1.another.example.com:88
+  admin_server = kdc1.another.example.com:749
+  default_domain = another.example.com
+}
 EXAMPLE.COM = {
   kdc = kdc1.example.com:88
   kdc = kdc2.example.com:88

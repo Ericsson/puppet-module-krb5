@@ -107,39 +107,44 @@ describe 'krb5' do
 
   context 'with all parameters set' do
     let(:params) do
-      { :default_realm        => 'EXAMPLE.COM',
-        :dns_lookup_realm     => 'false',
-        :dns_lookup_kdc       => 'false',
-        :ticket_lifetime      => '24h',
-        :default_keytab_name  => '/etc/opt/quest/vas/host.keytab',
-        :forwardable          => 'true',
-        :proxiable            => 'true',
-        :rdns                 => 'false',
-        :realms               => {
-          'EXAMPLE.COM'       => {
-            'default_domain'  => 'example.com',
-            'kdc'             => [ 'kdc1.example.com:88', 'kdc2.example.com:88', ],
-            'admin_server'    => [ 'kdc1.example.com:749', 'kdc2.example.com:749', ],
+      { :default_realm          => 'EXAMPLE.COM',
+        :dns_lookup_realm       => 'false',
+        :dns_lookup_kdc         => 'false',
+        :ticket_lifetime        => '24h',
+        :default_keytab_name    => '/etc/opt/quest/vas/host.keytab',
+        :forwardable            => 'true',
+        :proxiable              => 'true',
+        :rdns                   => 'false',
+        :realms                 => {
+          'EXAMPLE.COM'         => {
+            'default_domain'    => 'example.com',
+            'kdc'               => [ 'kdc1.example.com:88', 'kdc2.example.com:88', ],
+            'admin_server'      => [ 'kdc1.example.com:749', 'kdc2.example.com:749', ],
+          },
+          'ANOTHER.EXAMPLE.COM' => {
+            'default_domain'    => 'another.example.com',
+            'kdc'               => 'kdc1.another.example.com:88',
+            'admin_server'      => 'kdc1.another.example.com:749',
           },
         },
-        :appdefaults          => {
-          'pam' => {
-            'debug'           => 'false',
-            'ticket_lifetime' => '36000',
-            'renew_lifetime'  => '36000',
-            'forwardable'     => 'true',
-            'krb4_convert'    => 'false',
+        :appdefaults            => {
+          'pam'                 => {
+            'debug'             => 'false',
+            'ticket_lifetime'   => '36000',
+            'renew_lifetime'    => '36000',
+            'forwardable'       => 'true',
+            'krb4_convert'      => 'false',
           },
         },
-        :domain_realm         => {
-          'example.com'       => 'EXAMPLE.COM',
+        :domain_realm           => {
+          'example.com'         => 'EXAMPLE.COM',
         },
-        :package              => 'krb5-package',
-        :krb5conf_file        => '/etc/kerberos/krb5.conf',
-        :krb5conf_ensure      => 'file',
-        :krb5conf_owner       => 'kerberos',
-        :krb5conf_group       => 'kerberos',
-        :krb5conf_mode        => '0600',
+        :package                => 'krb5-package',
+        :krb5conf_file          => '/etc/kerberos/krb5.conf',
+        :krb5conf_ensure        => 'file',
+        :krb5conf_owner         => 'kerberos',
+        :krb5conf_group         => 'kerberos',
+        :krb5conf_mode          => '0600',
       }
     end
 
