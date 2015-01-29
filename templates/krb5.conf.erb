@@ -62,8 +62,12 @@ rdns = <%= @rdns %>
 <% end -%>
 <% end -%>
 <% if @realms[key]['admin_server'] -%>
+<% if @realms[key]['admin_server'].is_a?(Array) -%>
 <% @realms[key]['admin_server'].sort.each do |as| -%>
   admin_server = <%= as %>
+<% end -%>
+<% else -%>
+  admin_server = <%= @realms[key]['admin_server'] %>
 <% end -%>
 <% end -%>
 <% if @realms[key]['default_domain'] -%>
