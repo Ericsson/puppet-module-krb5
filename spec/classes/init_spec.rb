@@ -6,6 +6,7 @@ describe 'krb5' do
     let(:facts) do { :osfamily => 'RedHat', } end
     it { should contain_class('krb5') }
     it { should contain_package('krb5-libs') }
+    it { should contain_package('krb5-workstation') }
     it { should contain_file('krb5conf').with({
       'path'   => '/etc/krb5.conf',
       'ensure' => 'present',
@@ -22,6 +23,7 @@ describe 'krb5' do
     let(:facts) do { :osfamily => 'Suse', } end
     it { should contain_class('krb5') }
     it { should contain_package('krb5') }
+    it { should contain_package('krb5-client') }
     it { should contain_file('krb5conf').with({
       'path'   => '/etc/krb5.conf',
       'ensure' => 'present',
