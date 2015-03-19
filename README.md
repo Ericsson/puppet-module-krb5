@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/emahags/puppet-module-krb5.png?branch=master)](https://travis-ci.org/emahags/puppet-module-krb5)
 
-Module to manage the kerberos config file
+Module to manage the kerberos config file and client packages
 
 ===
 

@@ -1,3 +1,4 @@
+# Manage the kerberos config file and client packages
 class krb5 (
     $logging_default      = 'FILE:/var/log/krb5libs.log',
     $logging_kdc          = 'FILE:/var/log/krb5kdc.log',
@@ -68,8 +69,8 @@ class krb5 (
   }
 
   file{ 'krb5conf':
-    path    => $krb5conf_file,
     ensure  => $krb5conf_ensure,
+    path    => $krb5conf_file,
     owner   => $krb5conf_owner,
     group   => $krb5conf_group,
     mode    => $krb5conf_mode,
@@ -78,10 +79,10 @@ class krb5 (
 
   if $::osfamily == 'Solaris' {
     file { 'krb5directory' :
-      ensure  => directory,
-      path    => '/etc/krb5',
-      owner   => $krb5conf_owner,
-      group   => $krb5conf_group,
+      ensure => directory,
+      path   => '/etc/krb5',
+      owner  => $krb5conf_owner,
+      group  => $krb5conf_group,
     }
 
     file { 'krb5link' :
