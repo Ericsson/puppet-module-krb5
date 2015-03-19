@@ -12,6 +12,7 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
+Gemfile.lock
 
 # YARD artifacts
 .yardoc
@@ -28,3 +29,7 @@ doc/
 metadata.json
 coverage/
 spec/fixtures/modules/*
+spec/fixtures/manifests/*
+
+# Geppetto (Eclipse) project files
+.project
