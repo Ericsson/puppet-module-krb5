@@ -137,7 +137,7 @@ krb5::domain_realm:
 
 package
 -------
-String with the related kerberos package to install. 'USE_DEFAULTS' will choose the appropriate default for the system.
+Array or String with the related kerberos package(s) to install. 'USE_DEFAULTS' will choose the appropriate default for the system.
 
 - *Default*: 'USE_DEFAULTS'
 

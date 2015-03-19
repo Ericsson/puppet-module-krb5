@@ -26,10 +26,10 @@ class krb5 (
   if $package == 'USE_DEFAULTS' {
     case $::osfamily {
       'RedHat': {
-        $package_real = 'krb5-libs'
+        $package_real = [ 'krb5-libs', 'krb5-workstation' ]
       }
       'Suse': {
-        $package_real = 'krb5'
+        $package_real = [ 'krb5', 'krb5-client' ]
       }
       'Solaris': {
         $package_real = [ 'SUNWkrbr', 'SUNWkrbu' ]
