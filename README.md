@@ -89,7 +89,7 @@ Boolean if reverse DNS resolution should be used
 
 realms
 ------
-List of kerberos domains
+List of kerberos domains (hash with nested arrays)
 
 - *Default*: undef
 
@@ -97,7 +97,8 @@ List of kerberos domains
 <pre>
 krb5::realms:
   'EXAMPLE.COM':
-    default_domain: 'example.com'
+    default_domain:
+      - 'example.com'
     kdc:
       - 'kdc1.example.com:88'
       - 'kdc2.example.com:88'
