@@ -113,6 +113,7 @@ describe 'krb5' do
         :dns_lookup_realm       => 'false',
         :dns_lookup_kdc         => 'false',
         :ticket_lifetime        => '24h',
+        :default_ccache_name    => 'FILE:/tmp/krb5cc_%{uid}',
         :default_keytab_name    => '/etc/opt/quest/vas/host.keytab',
         :forwardable            => 'true',
         :proxiable              => 'true',

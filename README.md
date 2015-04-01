@@ -63,6 +63,12 @@ Lifetime of kerberos ticket
 
 - *Default*: undef
 
+default_ccache_name
+-------------------
+String with name of default credential cache name file. This setting is supported by Kerberos version >= v1.11.
+
+- *Default*: undef
+
 default_keytab_name
 -------------------
 Name of keytab file
