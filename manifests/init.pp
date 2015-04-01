@@ -7,6 +7,7 @@ class krb5 (
     $dns_lookup_realm     = undef,
     $dns_lookup_kdc       = undef,
     $ticket_lifetime      = undef,
+    $default_ccache_name  = undef,
     $default_keytab_name  = undef,
     $forwardable          = undef,
     $proxiable            = undef,

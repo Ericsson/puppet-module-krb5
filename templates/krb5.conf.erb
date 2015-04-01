@@ -27,6 +27,9 @@ dns_lookup_kdc = <%= @dns_lookup_kdc %>
 <% if @ticket_lifetime -%>
 ticket_lifetime = <%= @ticket_lifetime %>
 <% end -%>
+<% if @default_ccache_name -%>
+default_ccache_name = <%= @default_ccache_name %>
+<% end -%>
 <% if @default_keytab_name -%>
 default_keytab_name = <%= @default_keytab_name %>
 <% end -%>
