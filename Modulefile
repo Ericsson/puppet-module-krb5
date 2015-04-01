@@ -1,5 +1,5 @@
 name 'puppet-module-krb5'
-version '0.3.0'
+version '0.4.0'
 source 'git://github.com/emahags/puppet-module-krb5.git'
 author 'emahags'
 license 'Apache License, Version 2.0'
