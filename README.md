@@ -15,6 +15,7 @@ This module is built for use with Puppet v3 on the following OS families.
 * RHEL 6
 * Suse
 * Solaris 10
+* Solaris 11
 
 ===
 
@@ -78,6 +79,12 @@ Name of keytab file
 forwardable
 -----------
 Boolean if ticket is forwardable
+
+- *Default*: undef
+
+allow_weak_crypto
+-----------------
+Boolean if weak encryption types are allowed
 
 - *Default*: undef
 

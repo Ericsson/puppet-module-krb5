@@ -10,6 +10,7 @@ class krb5 (
     $default_ccache_name  = undef,
     $default_keytab_name  = undef,
     $forwardable          = undef,
+    $allow_weak_crypto    = undef,
     $proxiable            = undef,
     $realms               = undef,
     $appdefaults          = undef,
@@ -34,7 +35,17 @@ class krb5 (
         $package_real = [ 'krb5', 'krb5-client' ]
       }
       'Solaris': {
-        $package_real = [ 'SUNWkrbr', 'SUNWkrbu' ]
+        case $::kernelrelease {
+          '5.10': {
+            $package_real = [ 'SUNWkrbr', 'SUNWkrbu' ]
+          }
+          '5.11': {
+            $package_real = [ 'pkg:/service/security/kerberos-5' ]
+          }
+          default: {
+            fail('krb5 supports SunOS 5.10 and 5.11.')
+          }
+        }
       }
       'Debian': {
         $package_real = 'krb5-user'

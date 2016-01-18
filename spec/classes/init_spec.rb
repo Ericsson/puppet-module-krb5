@@ -36,8 +36,67 @@ describe 'krb5' do
     it { should contain_file('krb5conf').with_content(krb5conf_fixture) }
   end
 
-  context 'with defaults for all parameters on Solaris' do
-    let(:facts) do { :osfamily => 'Solaris', } end
+  context 'with default params on osfamily Solaris kernelrelease 5.8' do
+    let :facts do
+      {
+        :osfamily      => 'Solaris',
+        :kernelrelease => '5.8',
+      }
+    end
+    it 'should fail' do
+      expect {
+        should contain_class('krb5')
+}.to raise_error(Puppet::Error,/krb5 supports SunOS 5\.10 and 5\.11\./)
+    end
+  end
+
+  context 'with default params on osfamily Solaris kernelrelease 5.11' do
+    let :facts do
+      {
+        :osfamily      => 'Solaris',
+        :kernelrelease => '5.11',
+      }
+    end
+    let(:params) do
+      {
+        :package_provider  => 'pkg',
+      }
+    end
+    it { should contain_class('krb5') }
+    it {
+      should contain_package('pkg:/service/security/kerberos-5').with({
+        'provider'  => 'pkg',
+      })
+    }
+    it { should contain_file('krb5conf').with({
+      'path'   => '/etc/krb5.conf',
+      'ensure' => 'present',
+      'owner'  => 'root',
+      'group'  => 'root',
+      'mode'   => '0644',
+    }) }
+    it { should contain_file('krb5directory').with({
+      'path'   => '/etc/krb5',
+      'ensure' => 'directory',
+      'owner'  => 'root',
+      'group'  => 'root',
+    }) }
+    it { should contain_file('krb5link').with({
+      'path'   => '/etc/krb5/krb5.conf',
+      'ensure' => 'link',
+      'target' => '/etc/krb5.conf',
+    }) }
+    krb5conf_fixture = File.read(fixtures("krb5.conf.defaults"))
+    it { should contain_file('krb5conf').with_content(krb5conf_fixture) }
+  end
+
+  context 'with default params on osfamily Solaris kernelrelease 5.10' do
+    let :facts do
+      {
+        :osfamily      => 'Solaris',
+        :kernelrelease => '5.10',
+      }
+    end
     let(:params) do
       { :package_adminfile => '/sw/Solaris/Sparc/noask',
         :package_provider  => 'sun',
