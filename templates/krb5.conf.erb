@@ -36,6 +36,9 @@ default_keytab_name = <%= @default_keytab_name %>
 <% if @forwardable -%>
 forwardable = <%= @forwardable %>
 <% end -%>
+<% if @allow_weak_crypto -%>
+allow_weak_crypto = <%= @allow_weak_crypto %>
+<% end -%>
 <% if @proxiable -%>
 proxiable = <%= @proxiable %>
 <% end -%>
