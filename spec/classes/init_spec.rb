@@ -46,7 +46,7 @@ describe 'krb5' do
     it 'should fail' do
       expect {
         should contain_class('krb5')
-}.to raise_error(Puppet::Error,/krb5 supports SunOS 5\.10 and 5\.11\./)
+}.to raise_error(Puppet::Error,/Default packages defined for only SunOS 5\.10 and 5\.11\. Please specify the krb5 packages in hiera/)
     end
   end
 
@@ -175,6 +175,7 @@ describe 'krb5' do
         :default_ccache_name    => 'FILE:/tmp/krb5cc_%{uid}',
         :default_keytab_name    => '/etc/opt/quest/vas/host.keytab',
         :forwardable            => 'true',
+        :allow_weak_crypto      => 'false',
         :proxiable              => 'true',
         :rdns                   => 'false',
         :realms                 => {
@@ -494,6 +495,34 @@ describe 'krb5' do
     }) }
 
     it { should contain_file('krb5conf').with_content("#Managed by puppet, any changes will be overwritten\n\n\[libdefaults\]\nforwardable = false\n") }
+  end
+
+ context 'with allow_weak_crypto set to <false> and disabled logging defaults' do
+    let(:facts) do
+      {
+        :osfamily => 'RedHat',
+      }
+    end
+    let(:params) do
+      {
+        :logging_default      => '',
+        :logging_kdc          => '',
+        :logging_admin_server => '',
+        :allow_weak_crypto    => 'false',
+      }
+    end
+
+    it { should contain_class('krb5') }
+    it { should contain_package('krb5-libs') }
+    it { should contain_file('krb5conf').with({
+      'path'   => '/etc/krb5.conf',
+      'ensure' => 'present',
+      'owner'  => 'root',
+      'group'  => 'root',
+      'mode'   => '0644',
+    }) }
+
+    it { should contain_file('krb5conf').with_content("#Managed by puppet, any changes will be overwritten\n\n\[libdefaults\]\nallow_weak_crypto = false\n") }
   end
 
   context 'with proxiable parameter set to <false> and disabled logging defaults' do
