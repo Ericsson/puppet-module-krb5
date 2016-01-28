@@ -13,6 +13,7 @@ ticket_lifetime = 24h
 default_ccache_name = FILE:/tmp/krb5cc_%{uid}
 default_keytab_name = /etc/opt/quest/vas/host.keytab
 forwardable = true
+allow_weak_crypto = false
 proxiable = true
 rdns = false
 
