@@ -43,7 +43,8 @@ class krb5 (
             $package_real = [ 'pkg:/service/security/kerberos-5' ]
           }
           default: {
-            fail('krb5 supports SunOS 5.10 and 5.11.')
+            $package_real = undef
+            fail('Default packages defined for only SunOS 5.10 and 5.11. Please specify the krb5 packages in hiera')
           }
         }
       }
