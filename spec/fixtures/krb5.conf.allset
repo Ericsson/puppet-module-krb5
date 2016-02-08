@@ -1,9 +1,9 @@
 #Managed by puppet, any changes will be overwritten
 
 [logging]
-default = FILE:/var/log/krb5libs.log
-kdc = FILE:/var/log/krb5kdc.log
-admin_server = FILE:/var/log/kadmind.log
+default = FILE:/tmp/log1
+kdc = FILE:/tmp/log2
+admin_server = FILE:/tmp/log3
 
 [libdefaults]
 default_realm = EXAMPLE.COM
