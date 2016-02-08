@@ -171,6 +171,7 @@ describe 'krb5' do
       { :logging_default        => 'FILE:/tmp/log1',
         :logging_kdc            => 'FILE:/tmp/log2',
         :logging_admin_server   => 'FILE:/tmp/log3',
+        :logging_krb524d        => 'FILE:/tmp/log4',
         :default_realm          => 'EXAMPLE.COM',
         :dns_lookup_realm       => 'false',
         :dns_lookup_kdc         => 'false',
@@ -230,7 +231,7 @@ describe 'krb5' do
     it { should contain_file('krb5conf').with_content(krb5conf_fixture) }
   end
 
-  context 'with all logging parameters set to <> (overriding default values)' do
+  context 'with logging parameters that have default values set to <> (overriding default values)' do
     let(:facts) do
       {
         :osfamily => 'RedHat',

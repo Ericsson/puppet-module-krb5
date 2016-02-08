@@ -40,6 +40,12 @@ Default admin server logging
 
 - *Default*: FILE:/var/log/kadmind.log
 
+logging_krb524d
+---------------
+krb524d logging
+
+- *Default*: undef
+
 default_realm
 -------------
 Default realm

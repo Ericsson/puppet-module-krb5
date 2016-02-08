@@ -4,6 +4,7 @@
 default = FILE:/tmp/log1
 kdc = FILE:/tmp/log2
 admin_server = FILE:/tmp/log3
+krb524d = FILE:/tmp/log4
 
 [libdefaults]
 default_realm = EXAMPLE.COM

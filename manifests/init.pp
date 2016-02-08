@@ -3,6 +3,7 @@ class krb5 (
     $logging_default      = 'FILE:/var/log/krb5libs.log',
     $logging_kdc          = 'FILE:/var/log/krb5kdc.log',
     $logging_admin_server = 'FILE:/var/log/kadmind.log',
+    $logging_krb524d      = undef,
     $default_realm        = undef,
     $dns_lookup_realm     = undef,
     $dns_lookup_kdc       = undef,
