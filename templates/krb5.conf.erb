@@ -45,6 +45,12 @@ proxiable = <%= @proxiable %>
 <% if @rdns -%>
 rdns = <%= @rdns %>
 <% end -%>
+<% if @default_tkt_enctypes -%>
+default_tkt_enctypes = <%= @default_tkt_enctypes %>
+<% end -%>
+<% if @default_tgs_enctypes -%>
+default_tgs_enctypes = <%= @default_tgs_enctypes %>
+<% end -%>
 <% end -%>
 <% if @appdefaults -%>
 

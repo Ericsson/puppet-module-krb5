@@ -16,6 +16,8 @@ forwardable = true
 allow_weak_crypto = false
 proxiable = true
 rdns = false
+default_tkt_enctypes = aes256-cts
+default_tgs_enctypes = aes128-cts
 
 [appdefaults]
 pam = {

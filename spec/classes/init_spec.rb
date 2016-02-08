@@ -178,6 +178,8 @@ describe 'krb5' do
         :allow_weak_crypto      => 'false',
         :proxiable              => 'true',
         :rdns                   => 'false',
+        :default_tkt_enctypes   => 'aes256-cts',
+        :default_tgs_enctypes   => 'aes128-cts',
         :realms                 => {
           'EXAMPLE.COM'         => {
             'default_domain'    => 'example.com',

@@ -100,6 +100,18 @@ Boolean if reverse DNS resolution should be used
 
 - *Default*: undef
 
+default_tkt_enctypes
+--------------------
+String of tkt enctypes
+
+- *Default*: undef
+
+default_tgs_enctypes
+--------------------
+String of tgs enctypes
+
+- *Default*: undef
+
 realms
 ------
 List of kerberos domains (hash with nested arrays)

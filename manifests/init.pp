@@ -16,6 +16,8 @@ class krb5 (
     $appdefaults          = undef,
     $domain_realm         = undef,
     $rdns                 = undef,
+    $default_tkt_enctypes = undef,
+    $default_tgs_enctypes = undef,
     $package              = 'USE_DEFAULTS',
     $package_adminfile    = undef,
     $package_provider     = undef,
