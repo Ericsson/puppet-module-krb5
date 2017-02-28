@@ -167,6 +167,7 @@ describe 'krb5' do
   end
 
   context 'with all parameters set' do
+    let(:facts) { { :osfamily => 'RedHat' } }
     let(:params) do
       { :logging_default        => 'FILE:/tmp/log1',
         :logging_kdc            => 'FILE:/tmp/log2',
