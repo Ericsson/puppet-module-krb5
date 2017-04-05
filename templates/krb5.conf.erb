@@ -87,11 +87,11 @@ default_tgs_enctypes = <%= @default_tgs_enctypes %>
 <% if @realms != {} -%>
 
 [realms]
-<%   @realms.sort.each do |key, hash| -%>
+<%   @realms.each do |key, hash| -%>
 <%= key %> = {
-<%     hash.sort.each do |option, values| -%>
+<%     hash.each do |option, values| -%>
 <%       if values.is_a?(Array) -%>
-<%         values.sort.each do |value| -%>
+<%         values.each do |value| -%>
   <%= option %> = <%= value %>
 <%       end -%>
 <%       else -%>
