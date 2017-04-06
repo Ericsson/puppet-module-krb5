@@ -1,0 +1,67 @@
+{
+  "name": "gillarkod-krb5",
+  "author": "gillarkod",
+  "license": "Apache-2.0",
+  "summary": "Manage Kerberos",
+  "description": "Manage the kerberos config file and client packages",
+  "source": "https://github.com/gillarkod/puppet-module-krb5.git",
+  "version": "v0.7.0",
+  "project_page": "https://github.com/gillarkod/puppet-module-krb5",
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Solaris",
+      "operatingsystemrelease": [
+        "10",
+        "11"
+      ]
+    },
+    {
+      "operatingsystem": "SLES",
+      "operatingsystemrelease": [
+        "10",
+        "11",
+        "12"
+      ]
+    },
+    {
+      "operatingsystem": "SLED",
+      "operatingsystemrelease": [
+        "10",
+        "11",
+        "12"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04"
+      ]
+    }
+  ],
+  "dependencies": [
+    { "version_requirement": ">= 3.2.0", "name": "puppetlabs/stdlib" }
+  ]
+}
