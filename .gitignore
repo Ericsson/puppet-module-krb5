@@ -12,7 +12,6 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
-Gemfile.lock
 
 # YARD artifacts
 .yardoc
@@ -22,14 +21,20 @@ doc/
 # Vim
 *.swp
 
+# Eclipse
+.project
+
 # OS X
 .DS_Store
 
 # Puppet
-metadata.json
 coverage/
-spec/fixtures/modules/*
 spec/fixtures/manifests/*
+spec/fixtures/modules/*
+Gemfile.lock
 
-# Geppetto (Eclipse) project files
-.project
+# JetBrains IDE
+.idea/
+
+# Rbenv
+.ruby-version
