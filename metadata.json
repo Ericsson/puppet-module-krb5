@@ -1,0 +1,40 @@
+{
+  "name": "kodguru-krb5",
+  "version": "0.7.0",
+  "author": "kodguru",
+  "summary": "Manage krb5",
+  "license": "Apache-2.0",
+  "source": "git://github.com/kodguru/puppet-module-krb5.git",
+  "project_page": "https://github.com/kodguru/puppet-module-krb5",
+  "issues_url": "https://github.com/kodguru/puppet-module-krb5/issues",
+  "description": "Manage the kerberos config file and client packages",
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 3.1.0 < 7.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian"
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": ["6"]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": ["6"]
+    },
+    {
+      "operatingsystem": "Solaris",
+      "operatingsystemrelease": ["10","11"]
+    },
+    {
+      "operatingsystem": "Suse"
+    }
+  ],
+  "dependencies": [
+    {"name":"puppetlabs/stdlib","version_requirement":">= 3.2.0 < 5.0.0"}
+  ]
+}
