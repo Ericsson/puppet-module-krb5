@@ -28,6 +28,7 @@ class krb5 (
     $krb5conf_owner       = 'root',
     $krb5conf_group       = 'root',
     $krb5conf_mode        = '0644',
+    $krb5key_link_target  = undef,
 ) {
   if $package == 'USE_DEFAULTS' {
     case $::osfamily {
@@ -106,6 +107,16 @@ class krb5 (
       path    => '/etc/krb5/krb5.conf',
       target  => $krb5conf_file,
       require => File['krb5directory'],
+    }
+  }
+
+  if $krb5key_link_target != undef {
+    validate_absolute_path($krb5key_link_target)
+
+    file { 'krb5keytab_file':
+      ensure => link,
+      path   => '/etc/krb5.keytab',
+      target => $krb5key_link_target,
     }
   }
 }
