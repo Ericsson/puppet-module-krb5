@@ -222,3 +222,9 @@ krb5conf_mode
 Mode of the config file
 
 - *Default*: 0644
+
+krb5key_link_target
+-------------
+Create symlink /etc/krb5.keytab with target specified
+
+- *Default*: undef

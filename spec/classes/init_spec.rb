@@ -17,6 +17,7 @@ describe 'krb5' do
 
     krb5conf_fixture = File.read(fixtures("krb5.conf.defaults"))
     it { should contain_file('krb5conf').with_content(krb5conf_fixture) }
+    it { should_not contain_file('krb5keytab_file') }
   end
 
   context 'with defaults for all parameters on Suse' do
@@ -34,6 +35,7 @@ describe 'krb5' do
 
     krb5conf_fixture = File.read(fixtures("krb5.conf.defaults"))
     it { should contain_file('krb5conf').with_content(krb5conf_fixture) }
+    it { should_not contain_file('krb5keytab_file') }
   end
 
   context 'with default params on osfamily Solaris kernelrelease 5.8' do
@@ -138,6 +140,7 @@ describe 'krb5' do
     }) }
     krb5conf_fixture = File.read(fixtures("krb5.conf.defaults"))
     it { should contain_file('krb5conf').with_content(krb5conf_fixture) }
+    it { should_not contain_file('krb5keytab_file') }
   end
 
   context 'on unsupported osfamily' do
@@ -164,6 +167,7 @@ describe 'krb5' do
 
     krb5conf_fixture = File.read(fixtures("krb5.conf.defaults"))
     it { should contain_file('krb5conf').with_content(krb5conf_fixture) }
+    it { should_not contain_file('krb5keytab_file') }
   end
 
   context 'with all parameters set' do
@@ -215,6 +219,7 @@ describe 'krb5' do
         :krb5conf_owner         => 'kerberos',
         :krb5conf_group         => 'kerberos',
         :krb5conf_mode          => '0600',
+        :krb5key_link_target    => '/etc/opt/authenicationservice/key.keytab'
       }
     end
 
@@ -230,6 +235,30 @@ describe 'krb5' do
 
     krb5conf_fixture = File.read(fixtures("krb5.conf.allset"))
     it { should contain_file('krb5conf').with_content(krb5conf_fixture) }
+    it { should contain_file('krb5keytab_file').with({
+      'ensure' => 'link',
+      'path'   => '/etc/krb5.keytab',
+      'target' => '/etc/opt/authenicationservice/key.keytab',
+    }) }
+  end
+
+  context 'with krb5key_link_target set to <invalid>' do
+    let(:facts) do
+      {
+        :osfamily => 'RedHat',
+      }
+    end
+    let(:params) do
+      {
+        :krb5key_link_target => 'relactive/path/keytab',
+      }
+    end
+
+    it 'should fail' do
+      expect {
+        should contain_class('krb5')
+}.to raise_error(Puppet::Error,/"relactive\/path\/keytab" is not an absolute path/)
+    end
   end
 
   context 'with logging parameters that have default values set to <> (overriding default values)' do
