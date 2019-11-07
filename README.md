@@ -15,6 +15,7 @@ exact matrix of supported Puppet and ruby versions.
 
 * Debian
 * RHEL 6
+* RHEL 7
 * Suse
 * Solaris 10
 * Solaris 11
