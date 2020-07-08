@@ -1,6 +1,0 @@
-#Managed by puppet, any changes will be overwritten
-
-[logging]
-default = FILE:/var/log/krb5libs.log
-kdc = FILE:/var/log/krb5kdc.log
-admin_server = FILE:/var/log/kadmind.log
