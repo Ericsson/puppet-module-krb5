@@ -48,7 +48,7 @@ class krb5 (
           }
           default: {
             $package_real = undef
-            fail('Default packages defined for only SunOS 5.10 and 5.11. Please specify the krb5 packages in hiera')
+            fail("krb5 only supports default package names for Solaris 5.10 and 5.11. Detected kernelrelease is <${::kernelrelease}>. Please specify package name with the \$package variable.")
           }
         }
       }

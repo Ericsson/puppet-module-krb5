@@ -15,7 +15,7 @@ admin_server = <%= @logging_admin_server %>
 krb524d = <%= @logging_krb524d %>
 <% end -%>
 <% end -%>
-<% if @default_realm or @dns_lookup_realm or @dns_lookup_kdc or @ticket_lifetime or @default_keytab_name or @forwardable or @allow_weak_crypto or @proxiable or @rdns -%>
+<% if @default_realm or @dns_lookup_realm or @dns_lookup_kdc or @ticket_lifetime or @default_ccache_name or @default_keytab_name or @forwardable or @allow_weak_crypto or @proxiable or @rdns or @default_tkt_enctypes or @default_tgs_enctypes -%>
 
 [libdefaults]
 <% if @default_realm -%>
