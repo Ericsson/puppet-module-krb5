@@ -132,7 +132,7 @@ describe 'krb5', type: :class do
         rdns:                 'false',
         default_tkt_enctypes: 'aes256-cts',
         default_tgs_enctypes: 'aes128-cts',
-        package:              'krb5-package-testing',
+        package:              ['krb5-package-testing'],
         package_adminfile:    'Solaris specific',
         package_provider:     'Solaris specific',
         package_source:       'Solaris specific',
@@ -464,7 +464,7 @@ describe 'krb5', type: :class do
   end
 
   context 'with package parameter set to testing' do
-    let(:params) { { package: 'testing' } }
+    let(:params) { { package: ['testing'] } }
 
     it { is_expected.to contain_package('testing') }
   end
@@ -520,14 +520,14 @@ describe 'krb5', type: :class do
         kernelrelease: '5.8',
       }
     end
-    let(:params) { { package: 'solaris-58-krb5-package' } }
+    let(:params) { { package: ['solaris-58-krb5-package'] } }
 
     it { is_expected.to contain_package('solaris-58-krb5-package') }
   end
 
   context 'on unsupported osfamily with package set' do
     let(:facts) { { osfamily: 'WeirdOS' } }
-    let(:params) { { package: 'weird-krb5-package' } }
+    let(:params) { { package: ['weird-krb5-package'] } }
 
     it { is_expected.to contain_package('weird-krb5-package') }
   end
@@ -580,8 +580,8 @@ describe 'krb5', type: :class do
       'array/string' => {
         name:    ['package'],
         valid:   ['string', ['array']],
-        invalid: [], # [{ 'ha' => 'sh' }, 3, 2.42, true], <- should become this after implementation
-        message: '', # source:
+        invalid: [{ 'ha' => 'sh' }, 3, 2.42, false],
+        message: 'is not an array nor a string', # source: krb5:fail
       },
       'boolean / stringified boolean' => {
         name:    ['dns_lookup_realm', 'dns_lookup_kdc', 'forwardable', 'allow_weak_crypto', 'proxiable', 'rdns'],

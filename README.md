@@ -170,12 +170,13 @@ krb5::domain_realm:
   'example.com': 'EXAMPLE.COM'
 </pre>
 
-package
--------
-Array or String with the related kerberos package(s) to install. 'USE_DEFAULTS' will choose the appropriate default for the system.
+---
+#### package (type: Array)
+Array of the related kerberos packages. [] will choose the appropriate default for the system. Support for type string is deprecated.
 
-- *Default*: 'USE_DEFAULTS'
+- *Default*: []
 
+---
 package_adminfile
 -----------------
 Solaris specific: string for package adminfile.

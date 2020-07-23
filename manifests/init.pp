@@ -19,7 +19,7 @@ class krb5 (
     $rdns                 = undef,
     $default_tkt_enctypes = undef,
     $default_tgs_enctypes = undef,
-    $package              = 'USE_DEFAULTS',
+    $package              = [],
     $package_adminfile    = undef,
     $package_provider     = undef,
     $package_source       = undef,
@@ -30,37 +30,42 @@ class krb5 (
     $krb5conf_mode        = '0644',
     $krb5key_link_target  = undef,
 ) {
-  if $package == 'USE_DEFAULTS' {
+
+  if $package == [] {
     case $::osfamily {
       'RedHat': {
-        $package_real = [ 'krb5-libs', 'krb5-workstation' ]
+        $package_array = [ 'krb5-libs', 'krb5-workstation' ]
       }
       'Suse': {
-        $package_real = [ 'krb5', 'krb5-client' ]
+        $package_array = [ 'krb5', 'krb5-client' ]
       }
       'Solaris': {
         case $::kernelrelease {
           '5.10': {
-            $package_real = [ 'SUNWkrbr', 'SUNWkrbu' ]
+            $package_array = [ 'SUNWkrbr', 'SUNWkrbu' ]
           }
           '5.11': {
-            $package_real = [ 'pkg:/service/security/kerberos-5' ]
+            $package_array = [ 'pkg:/service/security/kerberos-5' ]
           }
           default: {
-            $package_real = undef
             fail("krb5 only supports default package names for Solaris 5.10 and 5.11. Detected kernelrelease is <${::kernelrelease}>. Please specify package name with the \$package variable.")
           }
         }
       }
       'Debian': {
-        $package_real = 'krb5-user'
+        $package_array = [ 'krb5-user' ]
       }
       default: {
         fail("krb5 only supports default package names for Debian, RedHat, Suse and Solaris. Detected osfamily is <${::osfamily}>. Please specify package name with the \$package variable.")
       }
     }
-  } else {
-    $package_real = $package
+  }
+  else {
+    case type3x($package) {
+      'array':  { $package_array = $package }
+      'string': { $package_array = [ $package ] }
+      default:  { fail('krb5::package is not an array nor a string.') }
+    }
   }
 
   if $package_adminfile != undef {
@@ -81,7 +86,7 @@ class krb5 (
     }
   }
 
-  package{ $package_real:
+  package{ $package_array:
     ensure  => present,
   }
 
