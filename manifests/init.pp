@@ -31,6 +31,17 @@ class krb5 (
     $krb5key_link_target  = undef,
 ) {
 
+  if is_string($logging_default)      == false { fail('krb5::logging_default is not a string.') }
+  if is_string($logging_kdc)          == false { fail('krb5::logging_kdc is not a string.') }
+  if is_string($logging_admin_server) == false { fail('krb5::logging_admin_server is not a string.') }
+  if is_string($logging_krb524d)      == false { fail('krb5::logging_krb524d is not a string.') }
+  if is_string($ticket_lifetime)      == false { fail('krb5::ticket_lifetime is not a string.') }
+  if is_string($default_ccache_name)  == false { fail('krb5::default_ccache_name is not a string.') }
+  if is_string($default_tkt_enctypes) == false { fail('krb5::default_tkt_enctypes is not a string.') }
+  if is_string($default_tgs_enctypes) == false { fail('krb5::default_tgs_enctypes is not a string.') }
+  if is_string($krb5conf_owner)       == false { fail('krb5::krb5conf_owner is not a string.') }
+  if is_string($krb5conf_group)       == false { fail('krb5::krb5conf_group is not a string.') }
+
   if $package == [] {
     case $::osfamily {
       'RedHat': {

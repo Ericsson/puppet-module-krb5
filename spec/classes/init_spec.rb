@@ -596,11 +596,12 @@ describe 'krb5', type: :class do
         message: '', # source:
       },
       'string' => {
-        name:    ['logging_default', 'logging_kdc', 'logging_admin_server', 'logging_krb524d', 'default_realm', 'ticket_lifetime', 'default_ccache_name',
-                  'default_keytab_name', 'default_tkt_enctypes', 'default_tgs_enctypes', 'package_adminfile', 'package_source', 'krb5conf_owner', 'krb5conf_group'],
+        name:    ['logging_default', 'logging_kdc', 'logging_admin_server', 'logging_krb524d', 'ticket_lifetime', 'default_ccache_name',
+                  'default_tkt_enctypes', 'default_tgs_enctypes', 'krb5conf_owner', 'krb5conf_group'],
         valid:   ['string'],
-        invalid: [], # [['array'], { 'ha' => 'sh' }, 3, 2.42, false], <- should become this after implementation
-        message: '', # source:
+        invalid: [['array'], { 'ha' => 'sh' }, 3, 2.42, false], # <- should become this after implementation
+        message: 'is not a string', # source: krb5:fail
+
       },
       'string for file ensure' => {
         name:    ['krb5conf_ensure'],

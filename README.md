@@ -25,29 +25,32 @@ exact matrix of supported Puppet and ruby versions.
 # Parameters
 ------------
 
-logging_default
----------------
-Default logging
+---
+#### logging_default (type: String)
+Value for `default` in `logging` section of krb5.conf.
 
-- *Default*: FILE:/var/log/krb5libs.log
+- *Default*: 'FILE:/var/log/krb5libs.log'
 
-logging_kdc
------------
-Default kdc logging
+---
+#### logging_kdc (type: String)
+Value for `kdc` in `logging` section of krb5.conf.
 
-- *Default*: FILE:/var/log/krb5kdc.log
+- *Default*: 'FILE:/var/log/krb5kdc.log'
 
-logging_admin_server
---------------------
-Default admin server logging
+---
+#### logging_admin_server (type: String)
+Value for `admin_server` in `logging` section of krb5.conf.
 
-- *Default*: FILE:/var/log/kadmind.log
+- *Default*: 'FILE:/var/log/kadmind.log'
 
-logging_krb524d
----------------
-krb524d logging
+---
+
+#### logging_krb524d (type: String)
+Value for `krb524d` in `logging` section of krb5.conf.
 
 - *Default*: undef
+
+---
 
 default_realm
 -------------
@@ -67,18 +70,19 @@ Boolean to use dns to lookup kdc
 
 - *Default*: undef
 
-ticket_lifetime
----------------
-Lifetime of kerberos ticket
+---
+#### ticket_lifetime (type: String)
+Value for `ticket_lifetime` in `libdefaults` section of krb5.conf.
 
 - *Default*: undef
 
-default_ccache_name
--------------------
-String with name of default credential cache name file. This setting is supported by Kerberos version >= v1.11.
+---
+#### default_ccache_name (type: String)
+Value for `default_ccache_name` in `libdefaults` section of krb5.conf. This setting is supported by Kerberos version >= v1.11.
 
 - *Default*: undef
 
+---
 default_keytab_name
 -------------------
 Name of keytab file
@@ -109,18 +113,19 @@ Boolean if reverse DNS resolution should be used
 
 - *Default*: undef
 
-default_tkt_enctypes
---------------------
-String of tkt enctypes
+---
+#### default_tkt_enctypes (type: String)
+Value for `default_tkt_enctypes` in `libdefaults` section of krb5.conf.
 
 - *Default*: undef
 
-default_tgs_enctypes
---------------------
-String of tgs enctypes
+---
+#### default_tgs_enctypes (type: String)
+Value for `default_tgs_enctypes` in `libdefaults` section of krb5.conf.
 
 - *Default*: undef
 
+---
 realms
 ------
 List of kerberos domains (hash with nested arrays)
@@ -207,18 +212,19 @@ Ensure of the config file
 
 - *Default*: present
 
-krb5conf_owner
---------------
-Owner of the config file
+---
+#### krb5conf_owner (type: String)
+Owner of the config file.
 
 - *Default*: root
 
-krb5conf_group
---------------
-Group of the config file
+---
+#### krb5conf_group (type: String)
+Group of the config file.
 
 - *Default*: root
 
+---
 krb5conf_mode
 -------------
 Mode of the config file
