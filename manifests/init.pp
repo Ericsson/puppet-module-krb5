@@ -42,6 +42,12 @@ class krb5 (
   if is_string($krb5conf_owner)       == false { fail('krb5::krb5conf_owner is not a string.') }
   if is_string($krb5conf_group)       == false { fail('krb5::krb5conf_group is not a string.') }
 
+  if $default_keytab_name             != undef { validate_absolute_path($default_keytab_name) }
+  if $krb5conf_file                   != undef { validate_absolute_path($krb5conf_file) }
+  if $krb5key_link_target             != undef { validate_absolute_path($krb5key_link_target) }
+  if $package_adminfile               != undef { validate_absolute_path($package_adminfile) }
+  if $package_source                  != undef { validate_absolute_path($package_source) }
+
   if $package == [] {
     case $::osfamily {
       'RedHat': {

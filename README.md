@@ -83,11 +83,11 @@ Value for `default_ccache_name` in `libdefaults` section of krb5.conf. This sett
 - *Default*: undef
 
 ---
-default_keytab_name
--------------------
-Name of keytab file
+#### default_keytab_name (type: Absolute Path as String)
+Value for `default_keytab_name` in `libdefaults` section of krb5.conf. Name of keytab file.
 
 - *Default*: undef
+---
 
 forwardable
 -----------
@@ -182,29 +182,30 @@ Array of the related kerberos packages. [] will choose the appropriate default f
 - *Default*: []
 
 ---
-package_adminfile
------------------
-Solaris specific: string for package adminfile.
+#### package_adminfile (type: Absolute Path as String)
+Solaris specific: path to package adminfile.
 
 - *Default*: undef
 
+---
 package_provider
 ----------------
 Solaris specific (mostly): string for package provider.
 
 - *Default*: undef
 
-package_source
---------------
-Solaris specific (mostly): string for package source.
+---
+#### package_source (type: Absolute Path as String)
+Solaris specific (mostly): path to package source.
 
 - *Default*: undef
 
-krb5conf_file
--------------
-Path to config file
+---
+#### krb5conf_file (type: Absolute Path as String)
+Path to config file.
 
 - *Default*: /etc/krb5.conf
+---
 
 krb5conf_ensure
 ---------------
@@ -231,8 +232,9 @@ Mode of the config file
 
 - *Default*: 0644
 
-krb5key_link_target
--------------
-Create symlink /etc/krb5.keytab with target specified
+---
+#### krb5key_link_target (type: Absolute Path as String)
+Create symlink /etc/krb5.keytab with target specified.
 
 - *Default*: undef
+---

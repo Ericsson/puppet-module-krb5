@@ -133,9 +133,9 @@ describe 'krb5', type: :class do
         default_tkt_enctypes: 'aes256-cts',
         default_tgs_enctypes: 'aes128-cts',
         package:              ['krb5-package-testing'],
-        package_adminfile:    'Solaris specific',
+        package_adminfile:    '/Solaris/specific',
         package_provider:     'Solaris specific',
-        package_source:       'Solaris specific',
+        package_source:       '/Solaris/specific',
         krb5conf_file:        '/etc/testing/krb5.conf',
         krb5conf_ensure:      'file',
         krb5conf_owner:       'tester_owner',
@@ -572,10 +572,10 @@ describe 'krb5', type: :class do
   describe 'variable data type and content validations' do
     validations = {
       'absolute_path' => {
-        name:    ['krb5key_link_target'], # add 'krb5conf_file'
+        name:    ['default_keytab_name', 'package_adminfile', 'package_source ', 'krb5conf_file', 'krb5key_link_target'],
         valid:   ['/absolute/filepath', '/absolute/directory/'],
-        invalid: ['../invalid', 3, 2.42, ['array'], { 'ha' => 'sh' }, true, false, nil],
-        message: 'is not an absolute path', # source: stdlib
+        invalid: ['../invalid', 3, 2.42, ['array'], { 'ha' => 'sh' }, false],
+        message: 'is not an absolute path', # source: stdlib:validate_absolute_path
       },
       'array/string' => {
         name:    ['package'],
