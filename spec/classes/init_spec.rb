@@ -97,14 +97,14 @@ describe 'krb5', type: :class do
         logging_admin_server: 'FILE:/tmp/log3',
         logging_krb524d:      'FILE:/tmp/log4',
         default_realm:        'EXAMPLE.COM',
-        dns_lookup_realm:     'false',
-        dns_lookup_kdc:       'false',
+        dns_lookup_realm:     false,
+        dns_lookup_kdc:       false,
         ticket_lifetime:      '24h',
         default_ccache_name:  'FILE:/tmp/krb5cc_%{uid}',
         default_keytab_name:  '/etc/opt/quest/vas/host.keytab',
-        forwardable:          'true',
-        allow_weak_crypto:    'false',
-        proxiable:            'true',
+        forwardable:          true,
+        allow_weak_crypto:    false,
+        proxiable:            true,
         realms: {
           'EXAMPLE.COM'         => {
             'default_domain'    => 'example.com',
@@ -129,7 +129,7 @@ describe 'krb5', type: :class do
         domain_realm: {
           'example.com' => 'EXAMPLE.COM',
         },
-        rdns:                 'false',
+        rdns:                 false,
         default_tkt_enctypes: 'aes256-cts',
         default_tgs_enctypes: 'aes128-cts',
         package:              ['krb5-package-testing'],
@@ -305,13 +305,13 @@ describe 'krb5', type: :class do
   end
 
   context 'with dns_lookup_realm parameter set to true' do
-    let(:params) { { dns_lookup_realm: 'true' } }
+    let(:params) { { dns_lookup_realm: true } }
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\ndns_lookup_realm = true\n") }
   end
 
   context 'with dns_lookup_kdc parameter set to true' do
-    let(:params) { { dns_lookup_kdc: 'true' } }
+    let(:params) { { dns_lookup_kdc: true } }
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\ndns_lookup_kdc = true\n") }
   end
@@ -335,25 +335,25 @@ describe 'krb5', type: :class do
   end
 
   context 'with forwardable parameter set to false' do
-    let(:params) { { forwardable: 'false' } }
+    let(:params) { { forwardable: false } }
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\nforwardable = false\n") }
   end
 
   context 'with allow_weak_crypto parameter set to true' do
-    let(:params) { { allow_weak_crypto: 'true' } }
+    let(:params) { { allow_weak_crypto: true } }
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\nallow_weak_crypto = true\n") }
   end
 
   context 'with proxiable parameter set to false' do
-    let(:params) { { proxiable: 'false' } }
+    let(:params) { { proxiable: false } }
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\nproxiable = false\n") }
   end
 
   context 'with rdns parameter set to true' do
-    let(:params) { { rdns: 'true' } }
+    let(:params) { { rdns: true } }
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\nrdns = true\n") }
   end
@@ -586,8 +586,8 @@ describe 'krb5', type: :class do
       'boolean / stringified boolean' => {
         name:    ['dns_lookup_realm', 'dns_lookup_kdc', 'forwardable', 'allow_weak_crypto', 'proxiable', 'rdns'],
         valid:   [true, false, 'true', 'false'],
-        invalid: [], # ['string', ['array'], { 'ha' => 'sh' }, 3, 2.42, 'false'], <- should become this after implementation
-        message: '', # source:
+        invalid: ['string', ['array'], { 'ha' => 'sh' }, 3, 2.42],
+        message: 'is not a boolean', # source: krb5:fail
       },
       'hash' => {
         name:    ['realms', 'appdefaults', 'domain_realm'],

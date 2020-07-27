@@ -58,15 +58,15 @@ Default realm
 
 - *Default*: undef
 
-dns_lookup_realm
-----------------
-Boolean to use dns to lookup realm
+---
+#### dns_lookup_realm (type: Boolean)
+Value for `dns_lookup_realm` in `libdefaults` section of krb5.conf. To use dns to lookup realm.
 
 - *Default*: undef
 
-dns_lookup_kdc
---------------
-Boolean to use dns to lookup kdc
+---
+#### dns_lookup_kdc (type: Boolean)
+Value for `dns_lookup_kdc` in `libdefaults` section of krb5.conf. To use dns to lookup kdc.
 
 - *Default*: undef
 
@@ -88,28 +88,26 @@ Value for `default_keytab_name` in `libdefaults` section of krb5.conf. Name of k
 
 - *Default*: undef
 ---
-
-forwardable
------------
-Boolean if ticket is forwardable
+#### forwardable (type: Boolean)
+Value for `forwardable` in `libdefaults` section of krb5.conf. If ticket is forwardable.
 
 - *Default*: undef
 
-allow_weak_crypto
------------------
-Boolean if weak encryption types are allowed
-
-- *Default*: undef
-
-proxiable
----------
-Boolean if ticket is proxiable
-
-- *Default*: undef
-
-rdns
 ----
-Boolean if reverse DNS resolution should be used
+#### allow_weak_crypto (type: Boolean)
+Value for `allow_weak_crypto` in `libdefaults` section of krb5.conf. If weak encryption types are allowed.
+
+- *Default*: undef
+
+---
+#### proxiable (type: Boolean)
+Value for `proxiable` in `libdefaults` section of krb5.conf. If ticket is proxiable.
+
+- *Default*: undef
+
+---
+#### rdns (type: Boolean)
+Value for `rdns` in `libdefaults` section of krb5.conf. If reverse DNS resolution should be used.
 
 - *Default*: undef
 

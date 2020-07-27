@@ -48,6 +48,48 @@ class krb5 (
   if $package_adminfile               != undef { validate_absolute_path($package_adminfile) }
   if $package_source                  != undef { validate_absolute_path($package_source) }
 
+  case $dns_lookup_realm {
+    true, 'true':   { $dns_lookup_realm_string = 'true' }
+    false, 'false': { $dns_lookup_realm_string = 'false' }
+    undef:          { $dns_lookup_realm_string = undef }
+    default:        { fail('krb5::dns_lookup_realm is not a boolean.') }
+  }
+
+  case $dns_lookup_kdc {
+    true, 'true':   { $dns_lookup_kdc_string = 'true' }
+    false, 'false': { $dns_lookup_kdc_string = 'false' }
+    undef:          { $dns_lookup_kdc_string = undef }
+    default:        { fail('krb5::dns_lookup_kdc is not a boolean.') }
+  }
+
+  case $forwardable {
+    true, 'true':   { $forwardable_string = 'true' }
+    false, 'false': { $forwardable_string = 'false' }
+    undef:          { $forwardable_string = undef }
+    default:        { fail('krb5::forwardable is not a boolean.') }
+  }
+
+  case $allow_weak_crypto {
+    true, 'true':   { $allow_weak_crypto_string = 'true' }
+    false, 'false': { $allow_weak_crypto_string = 'false' }
+    undef:          { $allow_weak_crypto_string = undef }
+    default:        { fail('krb5::allow_weak_crypto is not a boolean.') }
+  }
+
+  case $proxiable {
+    true, 'true':   { $proxiable_string = 'true' }
+    false, 'false': { $proxiable_string = 'false' }
+    undef:          { $proxiable_string = undef }
+    default:        { fail('krb5::proxiable is not a boolean.') }
+  }
+
+  case $rdns {
+    true, 'true':   { $rdns_string = 'true' }
+    false, 'false': { $rdns_string = 'false' }
+    undef:          { $rdns_string = undef }
+    default:        { fail('krb5::rdns is not a boolean.') }
+  }
+
   if $package == [] {
     case $::osfamily {
       'RedHat': {
