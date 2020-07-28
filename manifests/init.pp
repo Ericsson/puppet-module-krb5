@@ -48,6 +48,8 @@ class krb5 (
   if $package_adminfile               != undef { validate_absolute_path($package_adminfile) }
   if $package_source                  != undef { validate_absolute_path($package_source) }
 
+  if $default_realm != undef and is_domain_name($default_realm) == false { fail('krb5::default_realm is not a domain name.') }
+
   validate_re($krb5conf_mode, '^[0-7]{4}$', "krb5::krb5conf_mode is not in four digit octal notation. It is <${krb5conf_mode}>.")
 
   $file_ensure_valid = ['present', 'absent', 'file', 'directory','link']

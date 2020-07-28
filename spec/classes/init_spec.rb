@@ -600,6 +600,12 @@ describe 'krb5', type: :class do
         message: 'is not a string', # source: krb5:fail
 
       },
+      'string for domain name' => {
+        name:    ['default_realm'],
+        valid:   ['example.com', 'EXAMPLE.COM', 'va.lid', 'VA.LID'],
+        invalid: ['under_score', 'sp ace', '-hypheninfront', 'spec!@|c#ars', ['array'], { 'ha' => 'sh' }, 2.42, false], # WTF: fixnum gets accepted
+        message: 'is not a domain name', # source: krb5:fail
+      },
       'string for file ensure' => {
         name:    ['krb5conf_ensure'],
         valid:   ['present', 'absent', 'file', 'directory', 'link'],

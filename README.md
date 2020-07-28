@@ -51,10 +51,8 @@ Value for `krb524d` in `logging` section of krb5.conf.
 - *Default*: undef
 
 ---
-
-default_realm
--------------
-Default realm
+#### default_realm (type: String)
+Value for `default_realm` in `libdefaults` section of krb5.conf. Default realm.
 
 - *Default*: undef
 
