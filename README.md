@@ -186,9 +186,9 @@ Solaris specific: path to package adminfile.
 - *Default*: undef
 
 ---
-package_provider
+#### package_provider (type: String)
 ----------------
-Solaris specific (mostly): string for package provider.
+Solaris specific (mostly), package provider for `$package`, valid values are 'sun' and 'pkg'.
 
 - *Default*: undef
 

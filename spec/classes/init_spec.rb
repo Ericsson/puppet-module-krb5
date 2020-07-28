@@ -609,8 +609,8 @@ describe 'krb5', type: :class do
       'string for package provider' => {
         name:    ['package_provider'],
         valid:   ['sun', 'pkg'],
-        invalid: [], # ['string', [array], { 'ha' => 'sh' }, 3, 2.42, true], <- should become this after implementation
-        message: '', # source:
+        invalid: ['string', ['array'], { 'ha' => 'sh' }, 3, 2.42, false],
+        message: 'is not a valid value for package type provider attribute', # source: krb5:validate_re
       },
       'string for service mode' => {
         name:    ['krb5conf_mode'],

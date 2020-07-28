@@ -53,6 +53,11 @@ class krb5 (
   $file_ensure_valid = ['present', 'absent', 'file', 'directory','link']
   validate_re($krb5conf_ensure, $file_ensure_valid, "krb5::krb5conf_ensure is not a valid value for file type ensure attribute. Check README for valid values, it is <${krb5conf_ensure}>."  )
 
+  if $package_provider != undef {
+    $package_provider_valid = ['sun', 'pkg']
+    validate_re($package_provider, $package_provider_valid, "krb5::package_provider is not a valid value for package type provider attribute. Check README for valid values, it is <${package_provider}>."  )
+  }
+
   case $dns_lookup_realm {
     true, 'true':   { $dns_lookup_realm_string = 'true' }
     false, 'false': { $dns_lookup_realm_string = 'false' }
