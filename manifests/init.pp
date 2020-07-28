@@ -48,6 +48,8 @@ class krb5 (
   if $package_adminfile               != undef { validate_absolute_path($package_adminfile) }
   if $package_source                  != undef { validate_absolute_path($package_source) }
 
+  validate_re($krb5conf_mode, '^[0-7]{4}$', "krb5::krb5conf_mode is not in four digit octal notation. It is <${krb5conf_mode}>.")
+
   case $dns_lookup_realm {
     true, 'true':   { $dns_lookup_realm_string = 'true' }
     false, 'false': { $dns_lookup_realm_string = 'false' }

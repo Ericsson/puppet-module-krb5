@@ -618,8 +618,8 @@ describe 'krb5', type: :class do
       'string for service mode' => {
         name:    ['krb5conf_mode'],
         valid:   ['0777', '0644', '0242'],
-        invalid: [], # ['0999', [array], { 'ha' => 'sh' }, 3, 2.42, true], <- should become this after implementation
-        message: 'expects a match for Pattern\[\/\^\[0-7\]\{4\}\$\/\]',
+        invalid: ['0999', 'string', ['array'], { 'ha' => 'sh' }, 3, 2.42, true],
+        message: 'is not in four digit octal notation', # source: krb5:validate_re
       },
     }
 

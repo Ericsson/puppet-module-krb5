@@ -224,9 +224,8 @@ Group of the config file.
 - *Default*: root
 
 ---
-krb5conf_mode
--------------
-Mode of the config file
+#### krb5conf_mode (type: String)
+File mode in four digit octal notation to be used for `$krb5conf_file`.
 
 - *Default*: 0644
 
