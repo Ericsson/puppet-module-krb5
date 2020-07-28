@@ -204,10 +204,8 @@ Path to config file.
 
 - *Default*: /etc/krb5.conf
 ---
-
-krb5conf_ensure
----------------
-Ensure of the config file
+#### krb5conf_ensure (type: String)
+Ensure attribute to be used for `$krb5conf_file`, valid values are 'present', 'absent', 'file', 'directory', and 'link'.
 
 - *Default*: present
 

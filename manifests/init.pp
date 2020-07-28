@@ -50,6 +50,9 @@ class krb5 (
 
   validate_re($krb5conf_mode, '^[0-7]{4}$', "krb5::krb5conf_mode is not in four digit octal notation. It is <${krb5conf_mode}>.")
 
+  $file_ensure_valid = ['present', 'absent', 'file', 'directory','link']
+  validate_re($krb5conf_ensure, $file_ensure_valid, "krb5::krb5conf_ensure is not a valid value for file type ensure attribute. Check README for valid values, it is <${krb5conf_ensure}>."  )
+
   case $dns_lookup_realm {
     true, 'true':   { $dns_lookup_realm_string = 'true' }
     false, 'false': { $dns_lookup_realm_string = 'false' }

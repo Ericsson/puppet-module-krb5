@@ -606,8 +606,8 @@ describe 'krb5', type: :class do
       'string for file ensure' => {
         name:    ['krb5conf_ensure'],
         valid:   ['present', 'absent', 'file', 'directory', 'link'],
-        invalid: [], # [['array'], { 'ha' => 'sh' }, 3, 2.42, false], <- should become this after implementation
-        message: '', # source:
+        invalid: ['string', ['array'], { 'ha' => 'sh' }, 3, 2.42, false],
+        message: 'is not a valid value for file type ensure attribute', # source: krb5:validate_re
       },
       'string for package provider' => {
         name:    ['package_provider'],
