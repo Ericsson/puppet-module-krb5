@@ -67,7 +67,7 @@ default_tkt_enctypes = <%= @default_tkt_enctypes %>
 default_tgs_enctypes = <%= @default_tgs_enctypes %>
 <% end -%>
 <% end -%>
-<% if @appdefaults -%>
+<% if @appdefaults != {} -%>
 
 [appdefaults]
 <% @appdefaults.keys.sort.each do |key| -%>
@@ -78,7 +78,7 @@ default_tgs_enctypes = <%= @default_tgs_enctypes %>
 }
 <% end -%>
 <% end -%>
-<% if @realms -%>
+<% if @realms != {} -%>
 
 [realms]
 <%   @realms.sort.each do |key, hash| -%>
@@ -95,7 +95,7 @@ default_tgs_enctypes = <%= @default_tgs_enctypes %>
 }
 <%   end -%>
 <% end -%>
-<% if @domain_realm -%>
+<% if @domain_realm != {} -%>
 
 [domain_realm]
 <% @domain_realm.keys.sort.each do |key| -%>

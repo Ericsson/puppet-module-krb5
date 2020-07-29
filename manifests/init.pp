@@ -13,9 +13,9 @@ class krb5 (
     $forwardable          = undef,
     $allow_weak_crypto    = undef,
     $proxiable            = undef,
-    $realms               = undef,
-    $appdefaults          = undef,
-    $domain_realm         = undef,
+    $realms               = {},
+    $appdefaults          = {},
+    $domain_realm         = {},
     $rdns                 = undef,
     $default_tkt_enctypes = undef,
     $default_tgs_enctypes = undef,
@@ -41,6 +41,10 @@ class krb5 (
   if is_string($default_tgs_enctypes) == false { fail('krb5::default_tgs_enctypes is not a string.') }
   if is_string($krb5conf_owner)       == false { fail('krb5::krb5conf_owner is not a string.') }
   if is_string($krb5conf_group)       == false { fail('krb5::krb5conf_group is not a string.') }
+
+  if is_hash($realms)                 == false { fail('krb5::realms is not a hash.') }
+  if is_hash($appdefaults)            == false { fail('krb5::appdefaults is not a hash.') }
+  if is_hash($domain_realm)           == false { fail('krb5::domain_realm is not a hash.') }
 
   if $default_keytab_name             != undef { validate_absolute_path($default_keytab_name) }
   if $krb5conf_file                   != undef { validate_absolute_path($krb5conf_file) }

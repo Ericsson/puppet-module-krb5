@@ -588,9 +588,9 @@ describe 'krb5', type: :class do
       },
       'hash' => {
         name:    ['realms', 'appdefaults', 'domain_realm'],
-        valid:   [], # valid hashes are to complex to block test them here. They should have their own tests anyway.
-        invalid: [], # ['string', [array], 3, 2.42, true], <- should become this after implementation
-        message: '', # source:
+        valid:   [], # Valid hashes are too complex to test them easily here. They should have their own tests anyway.
+        invalid: ['string', ['array'], 3, 2.42, false],
+        message: 'is not a hash', # source: krb5:fail
       },
       'string' => {
         name:    ['logging_default', 'logging_kdc', 'logging_admin_server', 'logging_krb524d', 'ticket_lifetime', 'default_ccache_name',

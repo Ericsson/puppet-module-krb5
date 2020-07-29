@@ -122,14 +122,13 @@ Value for `default_tgs_enctypes` in `libdefaults` section of krb5.conf.
 - *Default*: undef
 
 ---
-realms
-------
-List of kerberos domains (hash with nested arrays)
+#### realms (type: Hash)
+Content for `realms` section of krb5.conf. List of kerberos domains (hash with nested arrays).
 
-- *Default*: undef
+- *Default*: {}
 
-- *Hiera example*:
-<pre>
+##### Example using Hiera
+```yaml
 krb5::realms:
   'EXAMPLE.COM':
     default_domain:
@@ -140,16 +139,28 @@ krb5::realms:
     admin_server:
       - 'kdc1.example.com:749'
       - 'kdc2.example.com:749'
-</pre>
+```
 
-appdefaults
------------
-List of defaults for apps
+Create this `realms` section in krb5.conf.
+```
+[realms]
+EXAMPLE.COM = {
+  admin_server = kdc1.example.com:749
+  admin_server = kdc2.example.com:749
+  default_domain = example.com
+  kdc = kdc1.example.com:88
+  kdc = kdc2.example.com:88
+}
+```
 
-- *Default*: undef
+---
+#### appdefaults (type: Hash)
+Content for `appdefaults` section of krb5.conf. List of defaults for apps (hash with nested arrays).
 
-- *Hiera example*:
-<pre>
+- *Default*: {}
+
+##### Example using Hiera
+```yaml
 krb5::appdefaults:
   pam:
     'debug': 'false'
@@ -157,19 +168,37 @@ krb5::appdefaults:
     'renew_lifetime': '36000'
     'forwardable': 'true'
     'krb4_convert': 'false'
-</pre>
+```
+Create this `appdefaults` section in krb5.conf.
+```
+[appdefaults]
+pam = {
+         debug = false
+         forwardable = true
+         krb4_convert = false
+         renew_lifetime = 36000
+         ticket_lifetime = 36000
+}
+```
 
-domain_realm
-------------
-List of domain realms
+---
+#### domain_realm
+Content for `domain_realm` section of krb5.conf. List of domain realms (hash with nested arrays).
 
-- *Default*: undef
+- *Default*: {}
 
-- *Hiera example*:
-<pre>
+##### Example using Hiera
+```yaml
+
 krb5::domain_realm:
   'example.com': 'EXAMPLE.COM'
-</pre>
+```
+Create this `domain_realm` section in krb5.conf.
+```
+[domain_realm]
+.example.com = EXAMPLE.COM
+example.com = EXAMPLE.COM
+```
 
 ---
 #### package (type: Array)
