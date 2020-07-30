@@ -615,19 +615,19 @@ describe 'krb5', type: :class do
         name:    ['krb5conf_ensure'],
         valid:   ['present', 'absent', 'file', 'directory', 'link'],
         invalid: ['string', ['array'], { 'ha' => 'sh' }, 3, 2.42, false],
-        message: 'is not a valid value for file type ensure attribute', # source: krb5:validate_re
+        message: '(input needs to be a String|is not a valid value for file type ensure attribute)', # source: (stdlib5:validate_re|krb5:message)
       },
       'string for package provider' => {
         name:    ['package_provider'],
         valid:   ['sun', 'pkg'],
         invalid: ['string', ['array'], { 'ha' => 'sh' }, 3, 2.42, false],
-        message: 'is not a valid value for package type provider attribute', # source: krb5:validate_re
+        message: '(input needs to be a String|is not a valid value for package type provider attribute)', # source: (stdlib5:validate_re|krb5:message)
       },
       'string for service mode' => {
         name:    ['krb5conf_mode'],
         valid:   ['0777', '0644', '0242'],
         invalid: ['0999', 'string', ['array'], { 'ha' => 'sh' }, 3, 2.42, true],
-        message: 'is not in four digit octal notation', # source: krb5:validate_re
+        message: '(input needs to be a String|is not in four digit octal notation)', # source: (stdlib5:validate_re|krb5:message)
       },
       'string/integer' => {
         name:    ['ticket_lifetime'],
