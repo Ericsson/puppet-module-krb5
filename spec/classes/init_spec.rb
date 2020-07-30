@@ -319,6 +319,12 @@ describe 'krb5', type: :class do
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\nticket_lifetime = 242h\n") }
   end
 
+  context 'with ticket_lifetime parameter set to 24000' do
+    let(:params) { { ticket_lifetime: '24000' } }
+
+    it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\nticket_lifetime = 24000\n") }
+  end
+
   context 'with default_ccache_name parameter set to FILE:/test/ing_%{uid}' do
     let(:params) { { default_ccache_name: 'FILE:/test/ing_%{uid}' } }
 
@@ -593,12 +599,11 @@ describe 'krb5', type: :class do
         message: 'is not a hash', # source: krb5:fail
       },
       'string' => {
-        name:    ['logging_default', 'logging_kdc', 'logging_admin_server', 'logging_krb524d', 'ticket_lifetime', 'default_ccache_name',
+        name:    ['logging_default', 'logging_kdc', 'logging_admin_server', 'logging_krb524d', 'default_ccache_name',
                   'default_tkt_enctypes', 'default_tgs_enctypes', 'krb5conf_owner', 'krb5conf_group'],
         valid:   ['string'],
         invalid: [['array'], { 'ha' => 'sh' }, 3, 2.42, false], # <- should become this after implementation
         message: 'is not a string', # source: krb5:fail
-
       },
       'string for domain name' => {
         name:    ['default_realm'],
@@ -623,6 +628,12 @@ describe 'krb5', type: :class do
         valid:   ['0777', '0644', '0242'],
         invalid: ['0999', 'string', ['array'], { 'ha' => 'sh' }, 3, 2.42, true],
         message: 'is not in four digit octal notation', # source: krb5:validate_re
+      },
+      'string/integer' => {
+        name:    ['ticket_lifetime'],
+        valid:   ['string', 3 ],
+        invalid: [['array'], { 'ha' => 'sh' }, 2.42, false], # WTF: is_string auto convert stringified integers to integers
+        message: 'is not a string', # source: krb5:fail
       },
     }
 

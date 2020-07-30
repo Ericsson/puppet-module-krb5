@@ -35,7 +35,6 @@ class krb5 (
   if is_string($logging_kdc)          == false { fail('krb5::logging_kdc is not a string.') }
   if is_string($logging_admin_server) == false { fail('krb5::logging_admin_server is not a string.') }
   if is_string($logging_krb524d)      == false { fail('krb5::logging_krb524d is not a string.') }
-  if is_string($ticket_lifetime)      == false { fail('krb5::ticket_lifetime is not a string.') }
   if is_string($default_ccache_name)  == false { fail('krb5::default_ccache_name is not a string.') }
   if is_string($default_tkt_enctypes) == false { fail('krb5::default_tkt_enctypes is not a string.') }
   if is_string($default_tgs_enctypes) == false { fail('krb5::default_tgs_enctypes is not a string.') }
@@ -51,6 +50,9 @@ class krb5 (
   if $krb5key_link_target             != undef { validate_absolute_path($krb5key_link_target) }
   if $package_adminfile               != undef { validate_absolute_path($package_adminfile) }
   if $package_source                  != undef { validate_absolute_path($package_source) }
+
+  # Workaround is_string () converts strings that contain an integer to the data type integer and then fails because it is no longer a string. WTF!
+  if is_string($ticket_lifetime) == false and is_integer($ticket_lifetime) == false { fail('krb5::ticket_lifetime is not a string.') }
 
   if $default_realm != undef and is_domain_name($default_realm) == false { fail('krb5::default_realm is not a domain name.') }
 
