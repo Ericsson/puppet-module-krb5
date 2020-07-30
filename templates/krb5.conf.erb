@@ -1,5 +1,10 @@
 #Managed by puppet, any changes will be overwritten
-<% if @logging_default != '' or @logging_kdc != '' or @logging_admin_server != '' or @logging_krb524d -%>
+<% if
+     @logging_default != '' or
+     @logging_kdc != '' or
+     @logging_admin_server != '' or
+     @logging_krb524d
+-%>
 
 [logging]
 <% if @logging_default != '' -%>
@@ -15,7 +20,8 @@ admin_server = <%= @logging_admin_server %>
 krb524d = <%= @logging_krb524d %>
 <% end -%>
 <% end -%>
-<% if @default_realm or
+<% if
+     @default_realm or
      @dns_lookup_realm_string or
      @dns_lookup_kdc_string or
      @ticket_lifetime or

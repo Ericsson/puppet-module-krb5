@@ -602,7 +602,7 @@ describe 'krb5', type: :class do
         name:    ['logging_default', 'logging_kdc', 'logging_admin_server', 'logging_krb524d', 'default_ccache_name',
                   'default_tkt_enctypes', 'default_tgs_enctypes', 'krb5conf_owner', 'krb5conf_group'],
         valid:   ['string'],
-        invalid: [['array'], { 'ha' => 'sh' }, 3, 2.42, false], # <- should become this after implementation
+        invalid: [['array'], { 'ha' => 'sh' }, 3, 2.42, false],
         message: 'is not a string', # source: krb5:fail
       },
       'string for domain name' => {
@@ -626,12 +626,12 @@ describe 'krb5', type: :class do
       'string for service mode' => {
         name:    ['krb5conf_mode'],
         valid:   ['0777', '0644', '0242'],
-        invalid: ['0999', 'string', ['array'], { 'ha' => 'sh' }, 3, 2.42, true],
+        invalid: ['0999', 'string', ['array'], { 'ha' => 'sh' }, 3, 2.42, false],
         message: '(input needs to be a String|is not in four digit octal notation)', # source: (stdlib5:validate_re|krb5:message)
       },
       'string/integer' => {
         name:    ['ticket_lifetime'],
-        valid:   ['string', 3 ],
+        valid:   ['string', 3],
         invalid: [['array'], { 'ha' => 'sh' }, 2.42, false], # WTF: is_string auto convert stringified integers to integers
         message: 'is not a string', # source: krb5:fail
       },
