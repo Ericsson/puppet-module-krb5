@@ -97,14 +97,14 @@ describe 'krb5', type: :class do
         logging_admin_server: 'FILE:/tmp/log3',
         logging_krb524d:      'FILE:/tmp/log4',
         default_realm:        'EXAMPLE.COM',
-        dns_lookup_realm:     'false',
-        dns_lookup_kdc:       'false',
+        dns_lookup_realm:     false,
+        dns_lookup_kdc:       false,
         ticket_lifetime:      '24h',
         default_ccache_name:  'FILE:/tmp/krb5cc_%{uid}',
         default_keytab_name:  '/etc/opt/quest/vas/host.keytab',
-        forwardable:          'true',
-        allow_weak_crypto:    'false',
-        proxiable:            'true',
+        forwardable:          true,
+        allow_weak_crypto:    false,
+        proxiable:            true,
         realms: {
           'EXAMPLE.COM'         => {
             'default_domain'    => 'example.com',
@@ -129,13 +129,10 @@ describe 'krb5', type: :class do
         domain_realm: {
           'example.com' => 'EXAMPLE.COM',
         },
-        rdns:                 'false',
+        rdns:                 false,
         default_tkt_enctypes: 'aes256-cts',
         default_tgs_enctypes: 'aes128-cts',
-        package:              'krb5-package-testing',
-        package_adminfile:    'Solaris specific',
-        package_provider:     'Solaris specific',
-        package_source:       'Solaris specific',
+        package:              ['krb5-package-testing'],
         krb5conf_file:        '/etc/testing/krb5.conf',
         krb5conf_ensure:      'file',
         krb5conf_owner:       'tester_owner',
@@ -305,13 +302,13 @@ describe 'krb5', type: :class do
   end
 
   context 'with dns_lookup_realm parameter set to true' do
-    let(:params) { { dns_lookup_realm: 'true' } }
+    let(:params) { { dns_lookup_realm: true } }
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\ndns_lookup_realm = true\n") }
   end
 
   context 'with dns_lookup_kdc parameter set to true' do
-    let(:params) { { dns_lookup_kdc: 'true' } }
+    let(:params) { { dns_lookup_kdc: true } }
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\ndns_lookup_kdc = true\n") }
   end
@@ -320,6 +317,12 @@ describe 'krb5', type: :class do
     let(:params) { { ticket_lifetime: '242h' } }
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\nticket_lifetime = 242h\n") }
+  end
+
+  context 'with ticket_lifetime parameter set to 24000' do
+    let(:params) { { ticket_lifetime: '24000' } }
+
+    it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\nticket_lifetime = 24000\n") }
   end
 
   context 'with default_ccache_name parameter set to FILE:/test/ing_%{uid}' do
@@ -335,25 +338,25 @@ describe 'krb5', type: :class do
   end
 
   context 'with forwardable parameter set to false' do
-    let(:params) { { forwardable: 'false' } }
+    let(:params) { { forwardable: false } }
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\nforwardable = false\n") }
   end
 
   context 'with allow_weak_crypto parameter set to true' do
-    let(:params) { { allow_weak_crypto: 'true' } }
+    let(:params) { { allow_weak_crypto: true } }
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\nallow_weak_crypto = true\n") }
   end
 
   context 'with proxiable parameter set to false' do
-    let(:params) { { proxiable: 'false' } }
+    let(:params) { { proxiable: false } }
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\nproxiable = false\n") }
   end
 
   context 'with rdns parameter set to true' do
-    let(:params) { { rdns: 'true' } }
+    let(:params) { { rdns: true } }
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\nrdns = true\n") }
   end
@@ -464,7 +467,7 @@ describe 'krb5', type: :class do
   end
 
   context 'with package parameter set to testing' do
-    let(:params) { { package: 'testing' } }
+    let(:params) { { package: ['testing'] } }
 
     it { is_expected.to contain_package('testing') }
   end
@@ -520,14 +523,14 @@ describe 'krb5', type: :class do
         kernelrelease: '5.8',
       }
     end
-    let(:params) { { package: 'solaris-58-krb5-package' } }
+    let(:params) { { package: ['solaris-58-krb5-package'] } }
 
     it { is_expected.to contain_package('solaris-58-krb5-package') }
   end
 
   context 'on unsupported osfamily with package set' do
     let(:facts) { { osfamily: 'WeirdOS' } }
-    let(:params) { { package: 'weird-krb5-package' } }
+    let(:params) { { package: ['weird-krb5-package'] } }
 
     it { is_expected.to contain_package('weird-krb5-package') }
   end
@@ -572,53 +575,65 @@ describe 'krb5', type: :class do
   describe 'variable data type and content validations' do
     validations = {
       'absolute_path' => {
-        name:    ['krb5key_link_target'], # add 'krb5conf_file'
+        name:    ['default_keytab_name', 'package_adminfile', 'package_source ', 'krb5conf_file', 'krb5key_link_target'],
         valid:   ['/absolute/filepath', '/absolute/directory/'],
-        invalid: ['../invalid', 3, 2.42, ['array'], { 'ha' => 'sh' }, true, false, nil],
-        message: 'is not an absolute path', # source: stdlib
+        invalid: ['../invalid', 3, 2.42, ['array'], { 'ha' => 'sh' }, false],
+        message: 'is not an absolute path', # source: stdlib:validate_absolute_path
       },
       'array/string' => {
         name:    ['package'],
         valid:   ['string', ['array']],
-        invalid: [], # [{ 'ha' => 'sh' }, 3, 2.42, true], <- should become this after implementation
-        message: '', # source:
+        invalid: [{ 'ha' => 'sh' }, 3, 2.42, false],
+        message: 'is not an array nor a string', # source: krb5:fail
       },
       'boolean / stringified boolean' => {
         name:    ['dns_lookup_realm', 'dns_lookup_kdc', 'forwardable', 'allow_weak_crypto', 'proxiable', 'rdns'],
         valid:   [true, false, 'true', 'false'],
-        invalid: [], # ['string', ['array'], { 'ha' => 'sh' }, 3, 2.42, 'false'], <- should become this after implementation
-        message: '', # source:
+        invalid: ['string', ['array'], { 'ha' => 'sh' }, 3, 2.42],
+        message: 'is not a boolean', # source: krb5:fail
       },
       'hash' => {
         name:    ['realms', 'appdefaults', 'domain_realm'],
-        valid:   [], # valid hashes are to complex to block test them here. They should have their own tests anyway.
-        invalid: [], # ['string', [array], 3, 2.42, true], <- should become this after implementation
-        message: '', # source:
+        valid:   [], # Valid hashes are too complex to test them easily here. They should have their own tests anyway.
+        invalid: ['string', ['array'], 3, 2.42, false],
+        message: 'is not a hash', # source: krb5:fail
       },
       'string' => {
-        name:    ['logging_default', 'logging_kdc', 'logging_admin_server', 'logging_krb524d', 'default_realm', 'ticket_lifetime', 'default_ccache_name',
-                  'default_keytab_name', 'default_tkt_enctypes', 'default_tgs_enctypes', 'package_adminfile', 'package_source', 'krb5conf_owner', 'krb5conf_group'],
+        name:    ['logging_default', 'logging_kdc', 'logging_admin_server', 'logging_krb524d', 'default_ccache_name',
+                  'default_tkt_enctypes', 'default_tgs_enctypes', 'krb5conf_owner', 'krb5conf_group'],
         valid:   ['string'],
-        invalid: [], # [['array'], { 'ha' => 'sh' }, 3, 2.42, false], <- should become this after implementation
-        message: '', # source:
+        invalid: [['array'], { 'ha' => 'sh' }, 3, 2.42, false],
+        message: 'is not a string', # source: krb5:fail
+      },
+      'string for domain name' => {
+        name:    ['default_realm'],
+        valid:   ['example.com', 'EXAMPLE.COM', 'va.lid', 'VA.LID'],
+        invalid: ['under_score', 'sp ace', '-hypheninfront', 'spec!@|c#ars', ['array'], { 'ha' => 'sh' }, 2.42, false], # WTF: fixnum gets accepted
+        message: 'is not a domain name', # source: krb5:fail
       },
       'string for file ensure' => {
         name:    ['krb5conf_ensure'],
         valid:   ['present', 'absent', 'file', 'directory', 'link'],
-        invalid: [], # [['array'], { 'ha' => 'sh' }, 3, 2.42, false], <- should become this after implementation
-        message: '', # source:
+        invalid: ['string', ['array'], { 'ha' => 'sh' }, 3, 2.42, false],
+        message: '(input needs to be a String|is not a valid value for file type ensure attribute)', # source: (stdlib5:validate_re|krb5:message)
       },
       'string for package provider' => {
         name:    ['package_provider'],
         valid:   ['sun', 'pkg'],
-        invalid: [], # ['string', [array], { 'ha' => 'sh' }, 3, 2.42, true], <- should become this after implementation
-        message: '', # source:
+        invalid: ['string', ['array'], { 'ha' => 'sh' }, 3, 2.42, false],
+        message: '(input needs to be a String|is not a valid value for package type provider attribute)', # source: (stdlib5:validate_re|krb5:message)
       },
       'string for service mode' => {
         name:    ['krb5conf_mode'],
         valid:   ['0777', '0644', '0242'],
-        invalid: [], # ['0999', [array], { 'ha' => 'sh' }, 3, 2.42, true], <- should become this after implementation
-        message: 'expects a match for Pattern\[\/\^\[0-7\]\{4\}\$\/\]',
+        invalid: ['0999', 'string', ['array'], { 'ha' => 'sh' }, 3, 2.42, false],
+        message: '(input needs to be a String|is not in four digit octal notation)', # source: (stdlib5:validate_re|krb5:message)
+      },
+      'string/integer' => {
+        name:    ['ticket_lifetime'],
+        valid:   ['string', 3],
+        invalid: [['array'], { 'ha' => 'sh' }, 2.42, false], # WTF: is_string auto convert stringified integers to integers
+        message: 'is not a string', # source: krb5:fail
       },
     }
 

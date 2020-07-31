@@ -1,5 +1,10 @@
 #Managed by puppet, any changes will be overwritten
-<% if @logging_default != '' or @logging_kdc != '' or @logging_admin_server != '' or @logging_krb524d -%>
+<% if
+     @logging_default != '' or
+     @logging_kdc != '' or
+     @logging_admin_server != '' or
+     @logging_krb524d
+-%>
 
 [logging]
 <% if @logging_default != '' -%>
@@ -15,17 +20,30 @@ admin_server = <%= @logging_admin_server %>
 krb524d = <%= @logging_krb524d %>
 <% end -%>
 <% end -%>
-<% if @default_realm or @dns_lookup_realm or @dns_lookup_kdc or @ticket_lifetime or @default_ccache_name or @default_keytab_name or @forwardable or @allow_weak_crypto or @proxiable or @rdns or @default_tkt_enctypes or @default_tgs_enctypes -%>
+<% if
+     @default_realm or
+     @dns_lookup_realm_string or
+     @dns_lookup_kdc_string or
+     @ticket_lifetime or
+     @default_ccache_name or
+     @default_keytab_name or
+     @forwardable_string or
+     @allow_weak_crypto_string or
+     @proxiable_string or
+     @rdns_string or
+     @default_tkt_enctypes or
+     @default_tgs_enctypes
+-%>
 
 [libdefaults]
 <% if @default_realm -%>
 default_realm = <%= @default_realm %>
 <% end -%>
-<% if @dns_lookup_realm -%>
-dns_lookup_realm = <%= @dns_lookup_realm %>
+<% if @dns_lookup_realm_string -%>
+dns_lookup_realm = <%= @dns_lookup_realm_string %>
 <% end -%>
-<% if @dns_lookup_kdc -%>
-dns_lookup_kdc = <%= @dns_lookup_kdc %>
+<% if @dns_lookup_kdc_string -%>
+dns_lookup_kdc = <%= @dns_lookup_kdc_string %>
 <% end -%>
 <% if @ticket_lifetime -%>
 ticket_lifetime = <%= @ticket_lifetime %>
@@ -36,17 +54,17 @@ default_ccache_name = <%= @default_ccache_name %>
 <% if @default_keytab_name -%>
 default_keytab_name = <%= @default_keytab_name %>
 <% end -%>
-<% if @forwardable -%>
-forwardable = <%= @forwardable %>
+<% if @forwardable_string -%>
+forwardable = <%= @forwardable_string %>
 <% end -%>
-<% if @allow_weak_crypto -%>
-allow_weak_crypto = <%= @allow_weak_crypto %>
+<% if @allow_weak_crypto_string -%>
+allow_weak_crypto = <%= @allow_weak_crypto_string %>
 <% end -%>
-<% if @proxiable -%>
-proxiable = <%= @proxiable %>
+<% if @proxiable_string -%>
+proxiable = <%= @proxiable_string %>
 <% end -%>
-<% if @rdns -%>
-rdns = <%= @rdns %>
+<% if @rdns_string -%>
+rdns = <%= @rdns_string %>
 <% end -%>
 <% if @default_tkt_enctypes -%>
 default_tkt_enctypes = <%= @default_tkt_enctypes %>
@@ -55,7 +73,7 @@ default_tkt_enctypes = <%= @default_tkt_enctypes %>
 default_tgs_enctypes = <%= @default_tgs_enctypes %>
 <% end -%>
 <% end -%>
-<% if @appdefaults -%>
+<% if @appdefaults != {} -%>
 
 [appdefaults]
 <% @appdefaults.keys.sort.each do |key| -%>
@@ -66,7 +84,7 @@ default_tgs_enctypes = <%= @default_tgs_enctypes %>
 }
 <% end -%>
 <% end -%>
-<% if @realms -%>
+<% if @realms != {} -%>
 
 [realms]
 <%   @realms.sort.each do |key, hash| -%>
@@ -83,7 +101,7 @@ default_tgs_enctypes = <%= @default_tgs_enctypes %>
 }
 <%   end -%>
 <% end -%>
-<% if @domain_realm -%>
+<% if @domain_realm != {} -%>
 
 [domain_realm]
 <% @domain_realm.keys.sort.each do |key| -%>

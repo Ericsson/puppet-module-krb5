@@ -1,14 +1,11 @@
 # puppet-module-krb5
-===
 
 [![Build Status](https://travis-ci.org/kodguru/puppet-module-krb5.png?branch=master)](https://travis-ci.org/kodguru/puppet-module-krb5)
 
-Module to manage the kerberos config file and client packages
+Module to manage the kerberos config file and client packages.
 
-===
 
 # Compatibility
----------------
 This module has been tested to work on the following systems with the latest
 Puppet v3, v3 with future parser, v4, v5 and v6. See `.travis.yml` for the
 exact matrix of supported Puppet and ruby versions.
@@ -20,115 +17,112 @@ exact matrix of supported Puppet and ruby versions.
 * Solaris 10
 * Solaris 11
 
-===
 
-# Parameters
-------------
+### Parameters
+---
+#### logging_default (type: String)
+Value for `default` in `[logging]` section of `krb5.conf`.
 
-logging_default
----------------
-Default logging
+- Default: **'FILE:/var/log/krb5libs.log'**
 
-- *Default*: FILE:/var/log/krb5libs.log
+---
+#### logging_kdc (type: String)
+Value for `kdc` in `[logging]` section of `krb5.conf`.
 
-logging_kdc
------------
-Default kdc logging
+- Default: **'FILE:/var/log/krb5kdc.log'**
 
-- *Default*: FILE:/var/log/krb5kdc.log
+---
+#### logging_admin_server (type: String)
+Value for `admin_server` in `[logging]` section of `krb5.conf`.
 
-logging_admin_server
---------------------
-Default admin server logging
+- Default: **'FILE:/var/log/kadmind.log'**
 
-- *Default*: FILE:/var/log/kadmind.log
+---
 
-logging_krb524d
----------------
-krb524d logging
+#### logging_krb524d (type: String)
+Value for `krb524d` in `[logging]` section of `krb5.conf`.
 
-- *Default*: undef
+- Default: **undef**
 
-default_realm
--------------
-Default realm
+---
+#### default_realm (type: String)
+Value for `default_realm` in `[libdefaults]` section of `krb5.conf`. Default realm.
 
-- *Default*: undef
+- Default: **undef**
 
-dns_lookup_realm
-----------------
-Boolean to use dns to lookup realm
+---
+#### dns_lookup_realm (type: Boolean)
+Value for `dns_lookup_realm` in `[libdefaults]` section of `krb5.conf`. To use dns to lookup realm.
 
-- *Default*: undef
+- Default: **undef**
 
-dns_lookup_kdc
---------------
-Boolean to use dns to lookup kdc
+---
+#### dns_lookup_kdc (type: Boolean)
+Value for `dns_lookup_kdc` in `[libdefaults]` section of `krb5.conf`. To use dns to lookup kdc.
 
-- *Default*: undef
+- Default: **undef**
 
-ticket_lifetime
----------------
-Lifetime of kerberos ticket
+---
+#### ticket_lifetime (type: String)
+Value for `ticket_lifetime` in `[libdefaults]` section of `krb5.conf`.
 
-- *Default*: undef
+- Default: **undef**
 
-default_ccache_name
--------------------
-String with name of default credential cache name file. This setting is supported by Kerberos version >= v1.11.
+---
+#### default_ccache_name (type: String)
+Value for `default_ccache_name` in `[libdefaults]` section of `krb5.conf`. This setting is supported by Kerberos version >= v1.11.
 
-- *Default*: undef
+- Default: **undef**
 
-default_keytab_name
--------------------
-Name of keytab file
+---
+#### default_keytab_name (type: Absolute Path as String)
+Value for `default_keytab_name` in `[libdefaults]` section of `krb5.conf`. Name of keytab file.
 
-- *Default*: undef
+- Default: **undef**
+---
+#### forwardable (type: Boolean)
+Value for `forwardable` in `[libdefaults]` section of `krb5.conf`. If ticket is forwardable.
 
-forwardable
------------
-Boolean if ticket is forwardable
+- Default: **undef**
 
-- *Default*: undef
-
-allow_weak_crypto
------------------
-Boolean if weak encryption types are allowed
-
-- *Default*: undef
-
-proxiable
----------
-Boolean if ticket is proxiable
-
-- *Default*: undef
-
-rdns
 ----
-Boolean if reverse DNS resolution should be used
+#### allow_weak_crypto (type: Boolean)
+Value for `allow_weak_crypto` in `[libdefaults]` section of `krb5.conf`. If weak encryption types are allowed.
 
-- *Default*: undef
+- Default: **undef**
 
-default_tkt_enctypes
---------------------
-String of tkt enctypes
+---
+#### proxiable (type: Boolean)
+Value for `proxiable` in `[libdefaults]` section of `krb5.conf`. If ticket is proxiable.
 
-- *Default*: undef
+- Default: **undef**
 
-default_tgs_enctypes
---------------------
-String of tgs enctypes
+---
+#### rdns (type: Boolean)
+Value for `rdns` in `[libdefaults]` section of `krb5.conf`. If reverse DNS resolution should be used.
 
-- *Default*: undef
+- Default: **undef**
 
-realms
-------
-List of kerberos domains (hash with nested arrays)
+---
+#### default_tkt_enctypes (type: String)
+Value for `default_tkt_enctypes` in `[libdefaults]` section of `krb5.conf`.
 
-- *Default*: undef
+- Default: **undef**
 
-- *Hiera example*:
-<pre>
+---
+#### default_tgs_enctypes (type: String)
+Value for `default_tgs_enctypes` in `[libdefaults]` section of `krb5.conf`.
+
+- Default: **undef**
+
+---
+#### realms (type: Hash)
+Content for `[realms]` section of `krb5.conf`. List of kerberos domains (hash with nested arrays).
+
+- Default: **{}**
+
+##### Example using Hiera
+```yaml
 krb5::realms:
   'EXAMPLE.COM':
     default_domain:
@@ -139,16 +133,28 @@ krb5::realms:
     admin_server:
       - 'kdc1.example.com:749'
       - 'kdc2.example.com:749'
-</pre>
+```
 
-appdefaults
------------
-List of defaults for apps
+Create this `[realms]` section in `krb5.conf`.
+```
+[realms]
+EXAMPLE.COM = {
+  admin_server = kdc1.example.com:749
+  admin_server = kdc2.example.com:749
+  default_domain = example.com
+  kdc = kdc1.example.com:88
+  kdc = kdc2.example.com:88
+}
+```
 
-- *Default*: undef
+---
+#### appdefaults (type: Hash)
+Content for `[appdefaults]` section of `krb5.conf`. List of defaults for apps (hash with nested arrays).
 
-- *Hiera example*:
-<pre>
+- Default: **{}**
+
+##### Example using Hiera
+```yaml
 krb5::appdefaults:
   pam:
     'debug': 'false'
@@ -156,76 +162,94 @@ krb5::appdefaults:
     'renew_lifetime': '36000'
     'forwardable': 'true'
     'krb4_convert': 'false'
-</pre>
+```
+Create this `[appdefaults]` section in `krb5.conf`.
+```
+[appdefaults]
+pam = {
+         debug = false
+         forwardable = true
+         krb4_convert = false
+         renew_lifetime = 36000
+         ticket_lifetime = 36000
+}
+```
 
-domain_realm
-------------
-List of domain realms
+---
+#### domain_realm
+Content for `[domain_realm]` section of `krb5.conf`. List of domain realms (hash with nested arrays).
 
-- *Default*: undef
+- Default: **{}**
 
-- *Hiera example*:
-<pre>
+##### Example using Hiera
+```yaml
+
 krb5::domain_realm:
   'example.com': 'EXAMPLE.COM'
-</pre>
+```
+Create this `[domain_realm]` section in `krb5.conf`.
+```
+[domain_realm]
+.example.com = EXAMPLE.COM
+example.com = EXAMPLE.COM
+```
 
-package
--------
-Array or String with the related kerberos package(s) to install. 'USE_DEFAULTS' will choose the appropriate default for the system.
+---
+#### package (type: Array)
+Array of the related kerberos packages. [] will choose the appropriate default for the system. Support for type string is deprecated.
 
-- *Default*: 'USE_DEFAULTS'
+- Default: **[]**
 
-package_adminfile
------------------
-Solaris specific: string for package adminfile.
+---
+#### package_adminfile (type: String)
+Solaris specific: path to package adminfile.
 
-- *Default*: undef
+- Default: **undef**
 
-package_provider
-----------------
-Solaris specific (mostly): string for package provider.
+---
+#### package_provider (type: String)
+Solaris specific (mostly), package provider for `$package`, valid values are '`sun`' and '`pkg`'.
 
-- *Default*: undef
+- Default: **undef**
 
-package_source
---------------
-Solaris specific (mostly): string for package source.
+---
+#### package_source (type: String)
+Solaris specific (mostly): path to package source.
 
-- *Default*: undef
+- Default: **undef**
 
-krb5conf_file
--------------
-Path to config file
+---
+#### krb5conf_file (type: String)
+Path to config file.
 
-- *Default*: /etc/krb5.conf
+- Default: **'/etc/krb5.conf'**
+---
+#### krb5conf_ensure (type: String)
+Ensure attribute to be used for `$krb5conf_file`, valid values are '`present`', '`absent`', '`file`', '`directory`', and '`link`'.
 
-krb5conf_ensure
----------------
-Ensure of the config file
+- Default: **'present'**
 
-- *Default*: present
+---
+#### krb5conf_owner (type: String)
+File system owner of the config file.
 
-krb5conf_owner
---------------
-Owner of the config file
+- Default: **'root'**
 
-- *Default*: root
+---
+#### krb5conf_group (type: String)
+File system group of the config file.
 
-krb5conf_group
---------------
-Group of the config file
+- Default: **'root'**
 
-- *Default*: root
+---
+#### krb5conf_mode (type: String)
+File mode in four digit octal notation to be used for `$krb5conf_file`.
 
-krb5conf_mode
--------------
-Mode of the config file
+- Default: **'0644'**
 
-- *Default*: 0644
+---
+#### krb5key_link_target (type: String)
+Create symlink /etc/krb5.keytab with target specified.
 
-krb5key_link_target
--------------
-Create symlink /etc/krb5.keytab with target specified
-
-- *Default*: undef
+- Default: **undef**
+---

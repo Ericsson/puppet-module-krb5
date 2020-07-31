@@ -5,7 +5,7 @@ cache: bundler
 
 before_install:
   - if [ $BUNDLER_VERSION ]; then
-      gem install -v $BUNDLER_VERSION bundler --no-rdoc --no-ri;
+      gem install -v $BUNDLER_VERSION bundler;
     fi
   - bundle -v
   - rm -f Gemfile.lock
