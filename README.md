@@ -11,8 +11,9 @@ Puppet v3, v3 with future parser, v4, v5 and v6. See `.travis.yml` for the
 exact matrix of supported Puppet and ruby versions.
 
 * Debian
-* RHEL 6
-* RHEL 7
+* EL 6
+* EL 7
+* EL 8
 * Suse
 * Solaris 10
 * Solaris 11
