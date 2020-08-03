@@ -410,12 +410,12 @@ describe 'krb5', type: :class do
           'TEST2.ING' => {
             'default_domain' => 'test2.ing',
             'kdc'            => ['kdc1.test2.ing:242', 'kdc2.test2.ing:242'],
-            'admin_server'   => ['kdc1.test2.ing:23', 'kdc2.test2.ing:23'],
+            'admin_server'   => ['kdc2.test2.ing:23', 'kdc1.test2.ing:23'],
           },
           'TEST1.ING' => {
-            'default_domain' => 'test1.ing',
-            'kdc'            => ['kdc1.test1.ing:242', 'kdc2.test1.ing:242'],
+            'kdc'            => ['kdc2.test1.ing:242', 'kdc1.test1.ing:242'],
             'admin_server'   => ['kdc1.test1.ing:23', 'kdc2.test1.ing:23'],
+            'default_domain' => 'test1.ing',
           },
         },
       }
@@ -428,15 +428,15 @@ describe 'krb5', type: :class do
       |  default_domain = test2.ing
       |  kdc = kdc1.test2.ing:242
       |  kdc = kdc2.test2.ing:242
-      |  admin_server = kdc1.test2.ing:23
       |  admin_server = kdc2.test2.ing:23
+      |  admin_server = kdc1.test2.ing:23
       |}
       |TEST1.ING = {
-      |  default_domain = test1.ing
-      |  kdc = kdc1.test1.ing:242
       |  kdc = kdc2.test1.ing:242
+      |  kdc = kdc1.test1.ing:242
       |  admin_server = kdc1.test1.ing:23
       |  admin_server = kdc2.test1.ing:23
+      |  default_domain = test1.ing
       |}
     END
 
