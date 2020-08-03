@@ -23,10 +23,10 @@ default_tgs_enctypes = aes128-cts
 [appdefaults]
 pam = {
          debug = false
+         ticket_lifetime = 36000
+         renew_lifetime = 36000
          forwardable = true
          krb4_convert = false
-         renew_lifetime = 36000
-         ticket_lifetime = 36000
 }
 
 [realms]

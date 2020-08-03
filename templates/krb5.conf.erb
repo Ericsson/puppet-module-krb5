@@ -76,9 +76,9 @@ default_tgs_enctypes = <%= @default_tgs_enctypes %>
 <% if @appdefaults != {} -%>
 
 [appdefaults]
-<% @appdefaults.keys.sort.each do |key| -%>
+<% @appdefaults.keys.each do |key| -%>
 <%= key %> = {
-<% @appdefaults[key].keys.sort.each do |subkey| -%>
+<% @appdefaults[key].keys.each do |subkey| -%>
          <%= subkey %> = <%= @appdefaults[key][subkey] %>
 <% end -%>
 }

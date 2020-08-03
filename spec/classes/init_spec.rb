@@ -373,16 +373,16 @@ describe 'krb5', type: :class do
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\ndefault_tgs_enctypes = aes242-cts\n") }
   end
 
-  context 'with appdefaults parameter set to a valid hash and sorts the output' do
+  context 'with appdefaults parameter set to a valid hash and does not sort the output' do
     let :params do
       {
         appdefaults: {
           'test'              => {
-            'debug'           => 'false',
             'ticket_lifetime' => '36000',
-            'renew_lifetime'  => '36000',
             'forwardable'     => 'true',
+            'renew_lifetime'  => '36000',
             'krb4_convert'    => 'false',
+            'debug'           => 'false',
           },
         },
       }
@@ -392,11 +392,11 @@ describe 'krb5', type: :class do
       |
       |[appdefaults]
       |test = {
-      |         debug = false
-      |         forwardable = true
-      |         krb4_convert = false
-      |         renew_lifetime = 36000
       |         ticket_lifetime = 36000
+      |         forwardable = true
+      |         renew_lifetime = 36000
+      |         krb4_convert = false
+      |         debug = false
       |}
     END
 

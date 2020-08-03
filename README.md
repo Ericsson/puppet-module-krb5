@@ -150,29 +150,29 @@ EXAMPLE.COM = {
 
 ---
 #### appdefaults (type: Hash)
-Content for `[appdefaults]` section of `krb5.conf`. List of defaults for apps (hash with nested arrays).
+Content for `[appdefaults]` section of `krb5.conf`. List of defaults for apps (hash with nested arrays). Order is retained in the result.
 
 - Default: **{}**
 
 ##### Example using Hiera
 ```yaml
 krb5::appdefaults:
-  pam:
-    'debug': 'false'
+  test:
     'ticket_lifetime': '36000'
-    'renew_lifetime': '36000'
     'forwardable': 'true'
+    'renew_lifetime': '36000'
     'krb4_convert': 'false'
+    'debug': 'false'
 ```
 Create this `[appdefaults]` section in `krb5.conf`.
 ```
 [appdefaults]
-pam = {
-         debug = false
-         forwardable = true
-         krb4_convert = false
-         renew_lifetime = 36000
+test = {
          ticket_lifetime = 36000
+         forwardable = true
+         renew_lifetime = 36000
+         krb4_convert = false
+         debug = false
 }
 ```
 
