@@ -118,7 +118,7 @@ Value for `default_tgs_enctypes` in `[libdefaults]` section of `krb5.conf`.
 
 ---
 #### realms (type: Hash)
-Content for `[realms]` section of `krb5.conf`. List of kerberos domains (hash with nested arrays).
+Content for `[realms]` section of `krb5.conf`. List of kerberos domains (hash with nested arrays). Order is retained in the result.
 
 - Default: **{}**
 
@@ -140,11 +140,11 @@ Create this `[realms]` section in `krb5.conf`.
 ```
 [realms]
 EXAMPLE.COM = {
-  admin_server = kdc1.example.com:749
-  admin_server = kdc2.example.com:749
   default_domain = example.com
   kdc = kdc1.example.com:88
   kdc = kdc2.example.com:88
+  admin_server = kdc1.example.com:749
+  admin_server = kdc2.example.com:749
 }
 ```
 

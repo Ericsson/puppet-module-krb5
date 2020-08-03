@@ -403,7 +403,7 @@ describe 'krb5', type: :class do
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + hash_content) }
   end
 
-  context 'with realms parameter set to a valid hash and sorts the output' do
+  context 'with realms parameter set to a valid hash and does not sorts the output' do
     let :params do
       {
         realms: {
@@ -424,19 +424,19 @@ describe 'krb5', type: :class do
     hash_content = <<-END.gsub(%r{^\s+\|}, '')
       |
       |[realms]
-      |TEST1.ING = {
-      |  admin_server = kdc1.test1.ing:23
-      |  admin_server = kdc2.test1.ing:23
-      |  default_domain = test1.ing
-      |  kdc = kdc1.test1.ing:242
-      |  kdc = kdc2.test1.ing:242
-      |}
       |TEST2.ING = {
-      |  admin_server = kdc1.test2.ing:23
-      |  admin_server = kdc2.test2.ing:23
       |  default_domain = test2.ing
       |  kdc = kdc1.test2.ing:242
       |  kdc = kdc2.test2.ing:242
+      |  admin_server = kdc1.test2.ing:23
+      |  admin_server = kdc2.test2.ing:23
+      |}
+      |TEST1.ING = {
+      |  default_domain = test1.ing
+      |  kdc = kdc1.test1.ing:242
+      |  kdc = kdc2.test1.ing:242
+      |  admin_server = kdc1.test1.ing:23
+      |  admin_server = kdc2.test1.ing:23
       |}
     END
 
