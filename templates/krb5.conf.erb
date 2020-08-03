@@ -104,7 +104,7 @@ default_tgs_enctypes = <%= @default_tgs_enctypes %>
 <% if @domain_realm != {} -%>
 
 [domain_realm]
-<% @domain_realm.keys.sort.each do |key| -%>
+<% @domain_realm.keys.each do |key| -%>
 .<%= key %> = <%= @domain_realm[key] %>
 <%= key %> = <%= @domain_realm[key] %>
 <% end -%>

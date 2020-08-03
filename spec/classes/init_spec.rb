@@ -373,7 +373,7 @@ describe 'krb5', type: :class do
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\ndefault_tgs_enctypes = aes242-cts\n") }
   end
 
-  context 'with appdefaults parameter set to a valid hash and does not sort the output' do
+  context 'with appdefaults parameter set to a valid hash and order is retained in the output' do
     let :params do
       {
         appdefaults: {
@@ -403,7 +403,7 @@ describe 'krb5', type: :class do
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + hash_content) }
   end
 
-  context 'with realms parameter set to a valid hash and does not sorts the output' do
+  context 'with realms parameter set to a valid hash and order is retained in the output' do
     let :params do
       {
         realms: {
@@ -443,7 +443,7 @@ describe 'krb5', type: :class do
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + hash_content) }
   end
 
-  context 'with domain_realm parameter set to a valid hash and sorts the output' do
+  context 'with domain_realm parameter set to a valid hash and order is retained in the output' do
     let :params do
       {
         domain_realm: {
@@ -457,10 +457,10 @@ describe 'krb5', type: :class do
     hash_content = <<-END.gsub(%r{^\s+\|}, '')
       |
       |[domain_realm]
-      |.test1.ing = TEST1.ING
-      |test1.ing = TEST1.ING
       |.test2.ing = TEST2.ING
       |test2.ing = TEST2.ING
+      |.test1.ing = TEST1.ING
+      |test1.ing = TEST1.ING
     END
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + hash_content) }

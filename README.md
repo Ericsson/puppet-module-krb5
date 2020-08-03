@@ -178,7 +178,7 @@ test = {
 
 ---
 #### domain_realm
-Content for `[domain_realm]` section of `krb5.conf`. List of domain realms (hash with nested arrays).
+Content for `[domain_realm]` section of `krb5.conf`. List of domain realms (hash with nested arrays). Order is retained in the result.
 
 - Default: **{}**
 
