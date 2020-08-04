@@ -373,16 +373,16 @@ describe 'krb5', type: :class do
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + "\n\[libdefaults\]\ndefault_tgs_enctypes = aes242-cts\n") }
   end
 
-  context 'with appdefaults parameter set to a valid hash and sorts the output' do
+  context 'with appdefaults parameter set to a valid hash and order is retained in the output' do
     let :params do
       {
         appdefaults: {
           'test'              => {
-            'debug'           => 'false',
             'ticket_lifetime' => '36000',
-            'renew_lifetime'  => '36000',
             'forwardable'     => 'true',
+            'renew_lifetime'  => '36000',
             'krb4_convert'    => 'false',
+            'debug'           => 'false',
           },
         },
       }
@@ -392,30 +392,30 @@ describe 'krb5', type: :class do
       |
       |[appdefaults]
       |test = {
-      |         debug = false
-      |         forwardable = true
-      |         krb4_convert = false
-      |         renew_lifetime = 36000
       |         ticket_lifetime = 36000
+      |         forwardable = true
+      |         renew_lifetime = 36000
+      |         krb4_convert = false
+      |         debug = false
       |}
     END
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + hash_content) }
   end
 
-  context 'with realms parameter set to a valid hash and sorts the output' do
+  context 'with realms parameter set to a valid hash and order is retained in the output' do
     let :params do
       {
         realms: {
           'TEST2.ING' => {
             'default_domain' => 'test2.ing',
             'kdc'            => ['kdc1.test2.ing:242', 'kdc2.test2.ing:242'],
-            'admin_server'   => ['kdc1.test2.ing:23', 'kdc2.test2.ing:23'],
+            'admin_server'   => ['kdc2.test2.ing:23', 'kdc1.test2.ing:23'],
           },
           'TEST1.ING' => {
-            'default_domain' => 'test1.ing',
-            'kdc'            => ['kdc1.test1.ing:242', 'kdc2.test1.ing:242'],
+            'kdc'            => ['kdc2.test1.ing:242', 'kdc1.test1.ing:242'],
             'admin_server'   => ['kdc1.test1.ing:23', 'kdc2.test1.ing:23'],
+            'default_domain' => 'test1.ing',
           },
         },
       }
@@ -424,26 +424,26 @@ describe 'krb5', type: :class do
     hash_content = <<-END.gsub(%r{^\s+\|}, '')
       |
       |[realms]
-      |TEST1.ING = {
-      |  admin_server = kdc1.test1.ing:23
-      |  admin_server = kdc2.test1.ing:23
-      |  default_domain = test1.ing
-      |  kdc = kdc1.test1.ing:242
-      |  kdc = kdc2.test1.ing:242
-      |}
       |TEST2.ING = {
-      |  admin_server = kdc1.test2.ing:23
-      |  admin_server = kdc2.test2.ing:23
       |  default_domain = test2.ing
       |  kdc = kdc1.test2.ing:242
       |  kdc = kdc2.test2.ing:242
+      |  admin_server = kdc2.test2.ing:23
+      |  admin_server = kdc1.test2.ing:23
+      |}
+      |TEST1.ING = {
+      |  kdc = kdc2.test1.ing:242
+      |  kdc = kdc1.test1.ing:242
+      |  admin_server = kdc1.test1.ing:23
+      |  admin_server = kdc2.test1.ing:23
+      |  default_domain = test1.ing
       |}
     END
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + hash_content) }
   end
 
-  context 'with domain_realm parameter set to a valid hash and sorts the output' do
+  context 'with domain_realm parameter set to a valid hash and order is retained in the output' do
     let :params do
       {
         domain_realm: {
@@ -457,10 +457,10 @@ describe 'krb5', type: :class do
     hash_content = <<-END.gsub(%r{^\s+\|}, '')
       |
       |[domain_realm]
-      |.test1.ing = TEST1.ING
-      |test1.ing = TEST1.ING
       |.test2.ing = TEST2.ING
       |test2.ing = TEST2.ING
+      |.test1.ing = TEST1.ING
+      |test1.ing = TEST1.ING
     END
 
     it { is_expected.to contain_file('krb5conf').with_content(krb5conf_default_content + hash_content) }

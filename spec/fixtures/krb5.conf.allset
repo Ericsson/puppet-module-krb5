@@ -23,24 +23,24 @@ default_tgs_enctypes = aes128-cts
 [appdefaults]
 pam = {
          debug = false
+         ticket_lifetime = 36000
+         renew_lifetime = 36000
          forwardable = true
          krb4_convert = false
-         renew_lifetime = 36000
-         ticket_lifetime = 36000
 }
 
 [realms]
-ANOTHER.EXAMPLE.COM = {
-  admin_server = kdc1.another.example.com:749
-  default_domain = another.example.com
-  kdc = kdc1.another.example.com:88
-}
 EXAMPLE.COM = {
-  admin_server = kdc1.example.com:749
-  admin_server = kdc2.example.com:749
   default_domain = example.com
   kdc = kdc1.example.com:88
   kdc = kdc2.example.com:88
+  admin_server = kdc1.example.com:749
+  admin_server = kdc2.example.com:749
+}
+ANOTHER.EXAMPLE.COM = {
+  default_domain = another.example.com
+  kdc = kdc1.another.example.com:88
+  admin_server = kdc1.another.example.com:749
 }
 
 [domain_realm]

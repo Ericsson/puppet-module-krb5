@@ -118,7 +118,7 @@ Value for `default_tgs_enctypes` in `[libdefaults]` section of `krb5.conf`.
 
 ---
 #### realms (type: Hash)
-Content for `[realms]` section of `krb5.conf`. List of kerberos domains (hash with nested arrays).
+Content for `[realms]` section of `krb5.conf`. List of kerberos domains (hash with nested arrays). Order is retained in the result.
 
 - Default: **{}**
 
@@ -140,45 +140,45 @@ Create this `[realms]` section in `krb5.conf`.
 ```
 [realms]
 EXAMPLE.COM = {
-  admin_server = kdc1.example.com:749
-  admin_server = kdc2.example.com:749
   default_domain = example.com
   kdc = kdc1.example.com:88
   kdc = kdc2.example.com:88
+  admin_server = kdc1.example.com:749
+  admin_server = kdc2.example.com:749
 }
 ```
 
 ---
 #### appdefaults (type: Hash)
-Content for `[appdefaults]` section of `krb5.conf`. List of defaults for apps (hash with nested arrays).
+Content for `[appdefaults]` section of `krb5.conf`. List of defaults for apps (hash with nested arrays). Order is retained in the result.
 
 - Default: **{}**
 
 ##### Example using Hiera
 ```yaml
 krb5::appdefaults:
-  pam:
-    'debug': 'false'
+  test:
     'ticket_lifetime': '36000'
-    'renew_lifetime': '36000'
     'forwardable': 'true'
+    'renew_lifetime': '36000'
     'krb4_convert': 'false'
+    'debug': 'false'
 ```
 Create this `[appdefaults]` section in `krb5.conf`.
 ```
 [appdefaults]
-pam = {
-         debug = false
-         forwardable = true
-         krb4_convert = false
-         renew_lifetime = 36000
+test = {
          ticket_lifetime = 36000
+         forwardable = true
+         renew_lifetime = 36000
+         krb4_convert = false
+         debug = false
 }
 ```
 
 ---
 #### domain_realm
-Content for `[domain_realm]` section of `krb5.conf`. List of domain realms (hash with nested arrays).
+Content for `[domain_realm]` section of `krb5.conf`. List of domain realms (hash with nested arrays). Order is retained in the result.
 
 - Default: **{}**
 
