@@ -51,7 +51,8 @@ class krb5 (
   if $package_adminfile               != undef { validate_absolute_path($package_adminfile) }
   if $package_source                  != undef { validate_absolute_path($package_source) }
 
-  # Workaround is_string () converts strings that contain an integer to the data type integer and then fails because it is no longer a string. WTF!
+  # Workaround is_string() converts strings that contain an integer to the data type integer and
+  # then fails because it is no longer a string. WTF!
   if is_string($ticket_lifetime) == false and is_integer($ticket_lifetime) == false { fail('krb5::ticket_lifetime is not a string.') }
 
   if $default_realm != undef and is_domain_name($default_realm) == false { fail('krb5::default_realm is not a domain name.') }
@@ -59,11 +60,11 @@ class krb5 (
   validate_re($krb5conf_mode, '^[0-7]{4}$', "krb5::krb5conf_mode is not in four digit octal notation. It is <${krb5conf_mode}>.")
 
   $file_ensure_valid = ['present', 'absent', 'file', 'directory','link']
-  validate_re($krb5conf_ensure, $file_ensure_valid, "krb5::krb5conf_ensure is not a valid value for file type ensure attribute. Check README for valid values, it is <${krb5conf_ensure}>."  )
+  validate_re($krb5conf_ensure, $file_ensure_valid, "krb5::krb5conf_ensure is not a valid value for file type ensure attribute. Check README for valid values, it is <${krb5conf_ensure}>."  ) #lint:ignore:140chars
 
   if $package_provider != undef {
     $package_provider_valid = ['sun', 'pkg']
-    validate_re($package_provider, $package_provider_valid, "krb5::package_provider is not a valid value for package type provider attribute. Check README for valid values, it is <${package_provider}>."  )
+    validate_re($package_provider, $package_provider_valid, "krb5::package_provider is not a valid value for package type provider attribute. Check README for valid values, it is <${package_provider}>."  ) #lint:ignore:140chars
   }
 
   case $dns_lookup_realm {
@@ -125,7 +126,7 @@ class krb5 (
             $package_array = [ 'pkg:/service/security/kerberos-5' ]
           }
           default: {
-            fail("krb5 only supports default package names for Solaris 5.10 and 5.11. Detected kernelrelease is <${::kernelrelease}>. Please specify package name with the \$package variable.")
+            fail("krb5 only supports default package names for Solaris 5.10 and 5.11. Detected kernelrelease is <${::kernelrelease}>. Please specify package name with the \$package variable.") #lint:ignore:140chars
           }
         }
       }
@@ -133,7 +134,7 @@ class krb5 (
         $package_array = [ 'krb5-user' ]
       }
       default: {
-        fail("krb5 only supports default package names for Debian, RedHat, Suse and Solaris. Detected osfamily is <${::osfamily}>. Please specify package name with the \$package variable.")
+        fail("krb5 only supports default package names for Debian, RedHat, Suse and Solaris. Detected osfamily is <${::osfamily}>. Please specify package name with the \$package variable.") #lint:ignore:140chars
       }
     }
   }
