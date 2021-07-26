@@ -7,11 +7,10 @@
   "source": "git://github.com/kodguru/puppet-module-krb5.git",
   "project_page": "https://github.com/kodguru/puppet-module-krb5",
   "issues_url": "https://github.com/kodguru/puppet-module-krb5/issues",
-  "description": "Manage the kerberos config file and client packages",
-  "requirements": [
+  "dependencies": [
     {
-      "name": "puppet",
-      "version_requirement": ">= 3.1.0 < 7.0.0"
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 5.2.0 < 8.0.0"
     }
   ],
   "operatingsystem_support": [
@@ -20,21 +19,39 @@
     },
     {
       "operatingsystem": "RedHat",
-      "operatingsystemrelease": ["6", "7", "8"]
+      "operatingsystemrelease": [
+        "6",
+        "7",
+        "8"
+      ]
     },
     {
       "operatingsystem": "CentOS",
-      "operatingsystemrelease": ["6", "7", "8"]
+      "operatingsystemrelease": [
+        "6",
+        "7",
+        "8"
+      ]
     },
     {
       "operatingsystem": "Solaris",
-      "operatingsystemrelease": ["10","11"]
+      "operatingsystemrelease": [
+        "10",
+        "11"
+      ]
     },
     {
       "operatingsystem": "Suse"
     }
   ],
-  "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">= 3.2.0 < 6.0.0"}
-  ]
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 3.1.0 < 7.0.0"
+    }
+  ],
+  "description": "Manage the kerberos config file and client packages",
+  "pdk-version": "2.1.1",
+  "template-url": "pdk-default#2.1.1",
+  "template-ref": "tags/2.1.1-0-g03daa92"
 }

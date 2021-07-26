@@ -638,16 +638,11 @@ describe 'krb5', type: :class do
     }
 
     validations.sort.each do |type, var|
-      mandatory_params = {} if mandatory_params.nil?
       var[:name].each do |var_name|
         var[:params] = {} if var[:params].nil?
-        var[:valid] = {} if var[:valid].nil?
-        var[:invalid] = {} if var[:invalid].nil?
-
         var[:valid].each do |valid|
           context "when #{var_name} (#{type}) is set to valid #{valid} (as #{valid.class})" do
-            let(:facts) { [mandatory_facts, var[:facts]].reduce(:merge) } unless var[:facts].nil?
-            let(:params) { [mandatory_params, var[:params], { :"#{var_name}" => valid }].reduce(:merge) }
+            let(:params) { [var[:params], { "#{var_name}": valid, }].reduce(:merge) }
 
             it { is_expected.to compile }
           end
@@ -655,9 +650,9 @@ describe 'krb5', type: :class do
 
         var[:invalid].each do |invalid|
           context "when #{var_name} (#{type}) is set to invalid #{invalid} (as #{invalid.class})" do
-            let(:params) { [mandatory_params, var[:params], { :"#{var_name}" => invalid }].reduce(:merge) }
+            let(:params) { [var[:params], { "#{var_name}": invalid, }].reduce(:merge) }
 
-            it 'fails' do
+            it 'fail' do
               expect { is_expected.to contain_class(:subject) }.to raise_error(Puppet::Error, %r{#{var[:message]}})
             end
           end
