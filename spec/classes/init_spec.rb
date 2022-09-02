@@ -40,7 +40,9 @@ describe 'krb5', type: :class do
       context "where OS is <#{k}>" do
         let :facts do
           {
-            osfamily:      v[:osfamily],
+            os: {
+              family:      v[:osfamily],
+            },
             kernelrelease: v[:kernelrelease],
           }
         end
@@ -170,7 +172,9 @@ describe 'krb5', type: :class do
   context 'Solaris specific params and functionalities' do
     let :facts do
       {
-        osfamily:      'Solaris',
+        os: {
+          family: 'Solaris',
+        },
         kernelrelease: '5.11',
       }
     end
@@ -519,7 +523,9 @@ describe 'krb5', type: :class do
   context 'on unsupported Solaris with package set' do
     let :facts do
       {
-        osfamily: 'Solaris',
+        os: {
+          family: 'Solaris',
+        },
         kernelrelease: '5.8',
       }
     end
@@ -529,7 +535,7 @@ describe 'krb5', type: :class do
   end
 
   context 'on unsupported osfamily with package set' do
-    let(:facts) { { osfamily: 'WeirdOS' } }
+    let(:facts) { { os: { family: 'WeirdOS' } } }
     let(:params) { { package: ['weird-krb5-package'] } }
 
     it { is_expected.to contain_package('weird-krb5-package') }
@@ -538,7 +544,9 @@ describe 'krb5', type: :class do
   context 'with default params on unsupported Solaris version' do
     let :facts do
       {
-        osfamily: 'Solaris',
+        os: {
+          family: 'Solaris',
+        },
         kernelrelease: '5.8',
       }
     end
@@ -552,7 +560,7 @@ describe 'krb5', type: :class do
   end
 
   context 'with default params on unsupported osfamily' do
-    let(:facts) { { osfamily: 'WeirdOS' } }
+    let(:facts) { { os: { family: 'WeirdOS' } } }
 
     it 'fails' do
       expect {
@@ -568,72 +576,77 @@ describe 'krb5', type: :class do
     it 'fails' do
       expect {
         is_expected.to contain_class('krb5')
-      }.to raise_error(Puppet::Error, %r{"relactive\/path\/keytab" is not an absolute path})
+      }.to raise_error(Puppet::Error, %r{expects a Stdlib::Absolutepath})
     end
   end
 
   describe 'variable data type and content validations' do
     validations = {
-      'absolute_path' => {
+      'Array' => {
+        name:    ['package'],
+        valid:   [['testing']],
+        invalid: ['string', { 'ha' => 'sh' }, 3, 2.42, false],
+        message: 'expects an Array',
+      },
+      'Optional[Boolean]' => {
+        name:    ['dns_lookup_realm', 'dns_lookup_kdc', 'forwardable', 'allow_weak_crypto', 'proxiable', 'rdns'],
+        valid:   [true, false],
+        invalid: ['false', 'string', ['array'], { 'ha' => 'sh' }, 3, 2.42],
+        message: 'expects a value of type Undef or Boolean,',
+      },
+      'Hash' => {
+        name:    ['realms', 'appdefaults', 'domain_realm'],
+        valid:   [], # valid hashes are to complex to block test them here.
+        invalid: ['string', 3, 2.42, ['array'], false],
+        message: 'expects a Hash',
+      },
+      'Stdlib::Absolutepath' => {
         name:    ['default_keytab_name', 'package_adminfile', 'package_source ', 'krb5conf_file', 'krb5key_link_target'],
         valid:   ['/absolute/filepath', '/absolute/directory/'],
-        invalid: ['../invalid', 3, 2.42, ['array'], { 'ha' => 'sh' }, false],
-        message: 'is not an absolute path', # source: stdlib:validate_absolute_path
+        invalid: ['../invalid', ['/in/valid'], { 'ha' => 'sh' }, 3, 2.42, false],
+        message: 'expects a Stdlib::Absolutepath',
       },
-      'array/string' => {
-        name:    ['package'],
-        valid:   ['string', ['array']],
-        invalid: [{ 'ha' => 'sh' }, 3, 2.42, false],
-        message: 'is not an array nor a string', # source: krb5:fail
-      },
-      'boolean / stringified boolean' => {
-        name:    ['dns_lookup_realm', 'dns_lookup_kdc', 'forwardable', 'allow_weak_crypto', 'proxiable', 'rdns'],
-        valid:   [true, false, 'true', 'false'],
-        invalid: ['string', ['array'], { 'ha' => 'sh' }, 3, 2.42],
-        message: 'is not a boolean', # source: krb5:fail
-      },
-      'hash' => {
-        name:    ['realms', 'appdefaults', 'domain_realm'],
-        valid:   [], # Valid hashes are too complex to test them easily here. They should have their own tests anyway.
-        invalid: ['string', ['array'], 3, 2.42, false],
-        message: 'is not a hash', # source: krb5:fail
-      },
-      'string' => {
-        name:    ['logging_default', 'logging_kdc', 'logging_admin_server', 'logging_krb524d', 'default_ccache_name',
-                  'default_tkt_enctypes', 'default_tgs_enctypes', 'krb5conf_owner', 'krb5conf_group'],
-        valid:   ['string'],
+      'String' => {
+        name:    ['logging_default', 'logging_kdc', 'logging_admin_server'],
+        valid:   ['string', ''],
         invalid: [['array'], { 'ha' => 'sh' }, 3, 2.42, false],
-        message: 'is not a string', # source: krb5:fail
+        message: 'expects a String value',
       },
-      'string for domain name' => {
-        name:    ['default_realm'],
-        valid:   ['example.com', 'EXAMPLE.COM', 'va.lid', 'VA.LID'],
-        invalid: ['under_score', 'sp ace', '-hypheninfront', 'spec!@|c#ars', ['array'], { 'ha' => 'sh' }, 2.42, false], # WTF: fixnum gets accepted
-        message: 'is not a domain name', # source: krb5:fail
+      'String[1]' => {
+        name:    ['krb5conf_owner', 'krb5conf_group'],
+        valid:   ['string'],
+        invalid: ['', ['array'], { 'ha' => 'sh' }, 3, 2.42, false],
+        message: '(expects a String value|expects a String\[1\] value)',
       },
-      'string for file ensure' => {
+      'Optional[String[1]]' => {
+        name:    ['logging_krb524d', 'default_ccache_name', 'default_tkt_enctypes', 'default_tgs_enctypes', 'ticket_lifetime'],
+        valid:   ['string'],
+        invalid: ['', ['array'], { 'ha' => 'sh' }, 3, 2.42, false],
+        message: '(expects a String value|value of type Undef or String)',
+      },
+      'Enum[absent, directory, file, link, present]' => {
         name:    ['krb5conf_ensure'],
-        valid:   ['present', 'absent', 'file', 'directory', 'link'],
+        valid:   ['absent', 'directory', 'file', 'link', 'present'],
         invalid: ['string', ['array'], { 'ha' => 'sh' }, 3, 2.42, false],
-        message: '(input needs to be a String|is not a valid value for file type ensure attribute)', # source: (stdlib5:validate_re|krb5:message)
+        message: 'expects a match for Enum',
       },
-      'string for package provider' => {
+      'Optional[Enum[pkg, sun]]' => {
         name:    ['package_provider'],
-        valid:   ['sun', 'pkg'],
+        valid:   ['pkg', 'sun'],
         invalid: ['string', ['array'], { 'ha' => 'sh' }, 3, 2.42, false],
-        message: '(input needs to be a String|is not a valid value for package type provider attribute)', # source: (stdlib5:validate_re|krb5:message)
+        message: 'match for Enum\[\'pkg\', \'sun\'\]',
       },
-      'string for service mode' => {
+      'Stdlib::Host' => {
+        name:    ['default_realm'],
+        valid:   ['test', 'test.ing', 't.est.ing', '10.2.4.2'],
+        invalid: ['spa ce', 'under_score', '-hypheninfront', 'https:/test.ing', ['array'], { 'ha' => 'sh' }, 3, 2.42, false],
+        message: 'expect.*Stdlib::Host',
+      },
+      'Stdlib::Filemode' => {
         name:    ['krb5conf_mode'],
-        valid:   ['0777', '0644', '0242'],
-        invalid: ['0999', 'string', ['array'], { 'ha' => 'sh' }, 3, 2.42, false],
-        message: '(input needs to be a String|is not in four digit octal notation)', # source: (stdlib5:validate_re|krb5:message)
-      },
-      'string/integer' => {
-        name:    ['ticket_lifetime'],
-        valid:   ['string', 3],
-        invalid: [['array'], { 'ha' => 'sh' }, 2.42, false], # WTF: is_string auto convert stringified integers to integers
-        message: 'is not a string', # source: krb5:fail
+        valid:   ['0644', '0755', '0640', '1740'],
+        invalid: [2770, '0844', '00644', 'string', ['array'], { 'ha' => 'sh' }, 3, 2.42, false, nil],
+        message: 'expects a match for Stdlib::Filemode|Error while evaluating a Resource Statement',
       },
     }
 

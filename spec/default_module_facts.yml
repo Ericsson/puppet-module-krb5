@@ -1,2 +1,3 @@
 ---
-osfamily: 'RedHat'
+os:
+  family: 'RedHat'
