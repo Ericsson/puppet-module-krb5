@@ -123,84 +123,6 @@ class krb5 (
   Stdlib::Filemode                                       $krb5conf_mode        = '0644',
   Optional[Stdlib::Absolutepath]                         $krb5key_link_target  = undef,
 ) {
-  if is_string($logging_default)      == false { fail('krb5::logging_default is not a string.') }
-  if is_string($logging_kdc)          == false { fail('krb5::logging_kdc is not a string.') }
-  if is_string($logging_admin_server) == false { fail('krb5::logging_admin_server is not a string.') }
-  if is_string($logging_krb524d)      == false { fail('krb5::logging_krb524d is not a string.') }
-  if is_string($default_ccache_name)  == false { fail('krb5::default_ccache_name is not a string.') }
-  if is_string($default_tkt_enctypes) == false { fail('krb5::default_tkt_enctypes is not a string.') }
-  if is_string($default_tgs_enctypes) == false { fail('krb5::default_tgs_enctypes is not a string.') }
-  if is_string($krb5conf_owner)       == false { fail('krb5::krb5conf_owner is not a string.') }
-  if is_string($krb5conf_group)       == false { fail('krb5::krb5conf_group is not a string.') }
-
-  if is_hash($realms)                 == false { fail('krb5::realms is not a hash.') }
-  if is_hash($appdefaults)            == false { fail('krb5::appdefaults is not a hash.') }
-  if is_hash($domain_realm)           == false { fail('krb5::domain_realm is not a hash.') }
-
-  if $default_keytab_name             != undef { validate_absolute_path($default_keytab_name) }
-  if $krb5conf_file                   != undef { validate_absolute_path($krb5conf_file) }
-  if $krb5key_link_target             != undef { validate_absolute_path($krb5key_link_target) }
-  if $package_adminfile               != undef { validate_absolute_path($package_adminfile) }
-  if $package_source                  != undef { validate_absolute_path($package_source) }
-
-  # Workaround is_string() converts strings that contain an integer to the data type integer and
-  # then fails because it is no longer a string. WTF!
-  if is_string($ticket_lifetime) == false and is_integer($ticket_lifetime) == false { fail('krb5::ticket_lifetime is not a string.') }
-
-#  if $default_realm != undef and is_domain_name($default_realm) == false { fail('krb5::default_realm is not a domain name.') }
-
-  validate_re($krb5conf_mode, '^[0-7]{4}$', "krb5::krb5conf_mode is not in four digit octal notation. It is <${krb5conf_mode}>.")
-
-  $file_ensure_valid = ['present', 'absent', 'file', 'directory','link']
-  validate_re($krb5conf_ensure, $file_ensure_valid, "krb5::krb5conf_ensure is not a valid value for file type ensure attribute. Check README for valid values, it is <${krb5conf_ensure}>."  ) #lint:ignore:140chars
-
-  if $package_provider != undef {
-    $package_provider_valid = ['sun', 'pkg']
-    validate_re($package_provider, $package_provider_valid, "krb5::package_provider is not a valid value for package type provider attribute. Check README for valid values, it is <${package_provider}>."  ) #lint:ignore:140chars
-  }
-
-  case $dns_lookup_realm {
-    true, 'true':   { $dns_lookup_realm_string = 'true' }
-    false, 'false': { $dns_lookup_realm_string = 'false' }
-    undef:          { $dns_lookup_realm_string = undef }
-    default:        { fail('krb5::dns_lookup_realm is not a boolean.') }
-  }
-
-  case $dns_lookup_kdc {
-    true, 'true':   { $dns_lookup_kdc_string = 'true' }
-    false, 'false': { $dns_lookup_kdc_string = 'false' }
-    undef:          { $dns_lookup_kdc_string = undef }
-    default:        { fail('krb5::dns_lookup_kdc is not a boolean.') }
-  }
-
-  case $forwardable {
-    true, 'true':   { $forwardable_string = 'true' }
-    false, 'false': { $forwardable_string = 'false' }
-    undef:          { $forwardable_string = undef }
-    default:        { fail('krb5::forwardable is not a boolean.') }
-  }
-
-  case $allow_weak_crypto {
-    true, 'true':   { $allow_weak_crypto_string = 'true' }
-    false, 'false': { $allow_weak_crypto_string = 'false' }
-    undef:          { $allow_weak_crypto_string = undef }
-    default:        { fail('krb5::allow_weak_crypto is not a boolean.') }
-  }
-
-  case $proxiable {
-    true, 'true':   { $proxiable_string = 'true' }
-    false, 'false': { $proxiable_string = 'false' }
-    undef:          { $proxiable_string = undef }
-    default:        { fail('krb5::proxiable is not a boolean.') }
-  }
-
-  case $rdns {
-    true, 'true':   { $rdns_string = 'true' }
-    false, 'false': { $rdns_string = 'false' }
-    undef:          { $rdns_string = undef }
-    default:        { fail('krb5::rdns is not a boolean.') }
-  }
-
   if $package == [] {
     case $facts['os']['family'] {
       'RedHat': {
@@ -231,11 +153,7 @@ class krb5 (
     }
   }
   else {
-    case type3x($package) {
-      'array':  { $package_array = $package }
-      'string': { $package_array = [$package] }
-      default:  { fail('krb5::package is not an array nor a string.') }
-    }
+    $package_array = $package
   }
 
   if $package_adminfile != undef {
