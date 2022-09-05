@@ -541,35 +541,6 @@ describe 'krb5', type: :class do
     it { is_expected.to contain_package('weird-krb5-package') }
   end
 
-  context 'with default params on unsupported Solaris version' do
-    let :facts do
-      {
-        os: {
-          family: 'Solaris',
-        },
-        kernelrelease: '5.8',
-      }
-    end
-
-    it 'fails' do
-      expect {
-        is_expected.to contain_class('krb5')
-      }.to raise_error(Puppet::Error,
-                       %r{krb5 only supports default package names for Solaris 5\.10 and 5\.11\. Detected kernelrelease is <5\.8>\. Please specify package name with the \$package variable\.})
-    end
-  end
-
-  context 'with default params on unsupported osfamily' do
-    let(:facts) { { os: { family: 'WeirdOS' } } }
-
-    it 'fails' do
-      expect {
-        is_expected.to contain_class('krb5')
-      }.to raise_error(Puppet::Error,
-                       %r{krb5 only supports default package names for Debian, RedHat, Suse and Solaris\. Detected osfamily is <WeirdOS>\. Please specify package name with the \$package variable\.})
-    end
-  end
-
   context 'with krb5key_link_target set to <invalid>' do
     let(:params) { { krb5key_link_target: 'relactive/path/keytab' } }
 

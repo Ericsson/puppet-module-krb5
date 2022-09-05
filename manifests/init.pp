@@ -123,39 +123,6 @@ class krb5 (
   Stdlib::Filemode                                       $krb5conf_mode        = '0644',
   Optional[Stdlib::Absolutepath]                         $krb5key_link_target  = undef,
 ) {
-  if $package == [] {
-    case $facts['os']['family'] {
-      'RedHat': {
-        $package_array = ['krb5-libs', 'krb5-workstation']
-      }
-      'Suse': {
-        $package_array = ['krb5', 'krb5-client']
-      }
-      'Solaris': {
-        case $facts['kernelrelease'] {
-          '5.10': {
-            $package_array = ['SUNWkrbr', 'SUNWkrbu']
-          }
-          '5.11': {
-            $package_array = ['pkg:/service/security/kerberos-5']
-          }
-          default: {
-            fail("krb5 only supports default package names for Solaris 5.10 and 5.11. Detected kernelrelease is <${facts['kernelrelease']}>. Please specify package name with the \$package variable.") #lint:ignore:140chars
-          }
-        }
-      }
-      'Debian': {
-        $package_array = ['krb5-user']
-      }
-      default: {
-        fail("krb5 only supports default package names for Debian, RedHat, Suse and Solaris. Detected osfamily is <${facts['os']['family']}>. Please specify package name with the \$package variable.") #lint:ignore:140chars
-      }
-    }
-  }
-  else {
-    $package_array = $package
-  }
-
   if $package_adminfile != undef {
     Package {
       adminfile => $package_adminfile,
@@ -174,7 +141,7 @@ class krb5 (
     }
   }
 
-  package { $package_array:
+  package { $package:
     ensure  => present,
   }
 

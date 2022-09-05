@@ -1,0 +1,3 @@
+---
+krb5::package:
+  - 'krb5-user'
