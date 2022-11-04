@@ -1,0 +1,4 @@
+---
+krb5::package:
+  - 'krb5-libs'
+  - 'krb5-workstation'

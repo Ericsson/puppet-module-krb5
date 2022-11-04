@@ -1,0 +1,4 @@
+---
+krb5::package:
+  - 'krb5'
+  - 'krb5-client'

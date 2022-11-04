@@ -22,15 +22,15 @@ krb524d = <%= @logging_krb524d %>
 <% end -%>
 <% if
      @default_realm or
-     @dns_lookup_realm_string or
-     @dns_lookup_kdc_string or
+     @dns_lookup_realm != nil or
+     @dns_lookup_kdc != nil or
      @ticket_lifetime or
      @default_ccache_name or
      @default_keytab_name or
-     @forwardable_string or
-     @allow_weak_crypto_string or
-     @proxiable_string or
-     @rdns_string or
+     @forwardable != nil or
+     @allow_weak_crypto != nil or
+     @proxiable != nil or
+     @rdns != nil or
      @default_tkt_enctypes or
      @default_tgs_enctypes
 -%>
@@ -39,11 +39,11 @@ krb524d = <%= @logging_krb524d %>
 <%   if @default_realm -%>
 default_realm = <%= @default_realm %>
 <%   end -%>
-<%   if @dns_lookup_realm_string -%>
-dns_lookup_realm = <%= @dns_lookup_realm_string %>
+<%   if @dns_lookup_realm != nil -%>
+dns_lookup_realm = <%= @dns_lookup_realm %>
 <%   end -%>
-<%   if @dns_lookup_kdc_string -%>
-dns_lookup_kdc = <%= @dns_lookup_kdc_string %>
+<%   if @dns_lookup_kdc != nil -%>
+dns_lookup_kdc = <%= @dns_lookup_kdc %>
 <%   end -%>
 <%   if @ticket_lifetime -%>
 ticket_lifetime = <%= @ticket_lifetime %>
@@ -54,17 +54,17 @@ default_ccache_name = <%= @default_ccache_name %>
 <%   if @default_keytab_name -%>
 default_keytab_name = <%= @default_keytab_name %>
 <%   end -%>
-<%   if @forwardable_string -%>
-forwardable = <%= @forwardable_string %>
+<%   if @forwardable != nil -%>
+forwardable = <%= @forwardable %>
 <%   end -%>
-<%   if @allow_weak_crypto_string -%>
-allow_weak_crypto = <%= @allow_weak_crypto_string %>
+<%   if @allow_weak_crypto != nil -%>
+allow_weak_crypto = <%= @allow_weak_crypto %>
 <%   end -%>
-<%   if @proxiable_string -%>
-proxiable = <%= @proxiable_string %>
+<%   if @proxiable != nil -%>
+proxiable = <%= @proxiable %>
 <%   end -%>
-<%   if @rdns_string -%>
-rdns = <%= @rdns_string %>
+<%   if @rdns != nil -%>
+rdns = <%= @rdns %>
 <%   end -%>
 <%   if @default_tkt_enctypes -%>
 default_tkt_enctypes = <%= @default_tkt_enctypes %>
