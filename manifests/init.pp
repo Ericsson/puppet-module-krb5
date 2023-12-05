@@ -171,8 +171,6 @@ class krb5 (
   }
 
   if $krb5key_link_target != undef {
-    validate_absolute_path($krb5key_link_target)
-
     file { 'krb5keytab_file':
       ensure => link,
       path   => '/etc/krb5.keytab',
